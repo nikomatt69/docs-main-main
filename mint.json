@@ -27,25 +27,12 @@
   },
   
   "anchors": [
-    {
-      "name": "Get Started",
-      "icon": "book",
-      "url": "introduction"
-    },
-   
-    {
-      "name": "Components",
-      "icon": "slack",
-      "url": "components"
-    }
-    
-  ],
+  
   "navigation": [
     {
       "group": "Get Started",
       "pages": [
         "introduction",
-        "quickstart"
       ]
     },
     {
