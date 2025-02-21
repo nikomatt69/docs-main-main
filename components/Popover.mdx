@@ -1,0 +1,60 @@
+---
+title: Popover Component
+---
+
+
+This component provides popover functionality, displaying additional content in a popup triggered by user interaction.
+
+## Props
+
+- `prop1`: Description of prop1.
+- `prop2`: Description of prop2.
+
+## Usage
+
+```tsx
+import { Popover } from 'mycrumbs-uikit';
+
+const props = {};
+
+<Popover prop1="value1" prop2="value2" />;
+```
+
+<iframe src="https://example.com" width="600" height="200"  rounded="12px' className={'flex'}frameborder="0"></iframe>
+
+
+```tsx
+import { XMarkIcon } from '@heroicons/react/24/outline';
+import * as Popover from '@radix-ui/react-popover';
+import React from 'react';
+
+const HeyPopover = ({
+  arrow,
+  children,
+  close,
+  content
+}: {
+  arrow?: boolean;
+  children: React.ReactNode;
+  close?: boolean;
+  content: React.ReactNode;
+}) => (
+  <Popover.Root>
+    <Popover.Trigger asChild>{content}</Popover.Trigger>
+    <Popover.Portal>
+      <Popover.Content className="PopoverContent" sideOffset={5}>
+        {children}
+        {close && (
+          <Popover.Close aria-label="Close" className="PopoverClose">
+            <XMarkIcon />
+          </Popover.Close>
+        )}
+        {arrow && <Popover.Arrow className="PopoverArrow" />}
+      </Popover.Content>
+    </Popover.Portal>
+  </Popover.Root>
+);
+
+export { HeyPopover };
+
+```

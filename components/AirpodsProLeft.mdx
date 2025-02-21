@@ -1,0 +1,60 @@
+---
+title: AirpodsProLeft Component
+---
+
+This component represents the left AirPods Pro icon, commonly used in user interfaces to indicate the left earbud.
+
+## Props
+
+- `className`: Optional string to add custom CSS classes to the component. Useful for modifying dimensions, margins, or other styles.
+
+## Usage Examples
+
+### Basic Usage
+```tsx
+import { AirpodsProLeft } from 'mycrumbs-uikit';
+
+<AirpodsProLeft />
+```
+
+### With Custom Classes
+```tsx
+// Modifying dimensions
+<AirpodsProLeft className="w-[32px] h-[32px]" />
+
+// Adding margins
+<AirpodsProLeft className="m-2" />
+
+// Combining multiple styles
+<AirpodsProLeft className="w-[40px] h-[40px] mx-auto my-4" />
+```
+
+### Inside a Container
+```tsx
+<div className="flex items-center gap-2">
+  <AirpodsProLeft className="opacity-50" />
+  <span>Left AirPod</span>
+</div>
+```
+
+## Technical Notes
+
+- The component has default dimensions of 24x24 pixels
+- Supports all Tailwind CSS classes
+- Background image automatically scales to fit container dimensions
+
+```tsx
+/*
+We're constantly improving the code you see. 
+Please share your feedback here: https://form.asana.com/?k=uvp-HPgd3_hyoXRBw1IcNg&d=1152665201300829
+*/
+
+import React from "react";
+
+interface Props {
+  className?: string; // Optional string for custom CSS classes
+}
+
+export const AirpodsProLeft = ({ className = '' }: Props): JSX.Element => {
+  return <div className={`w-[24px] h-[24px] bg-[100%_100%] ${className}`} />;
+};

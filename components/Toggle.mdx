@@ -1,0 +1,170 @@
+---
+title: Toggle Component
+---
+
+A switch component that provides a visual toggle between two states. Built with Headless UI for accessibility and smooth animations.
+
+## Props
+
+- `on`: boolean - The current state of the toggle
+- `setOn`: (on: boolean) => void - Function to update the toggle state
+
+## Usage Examples
+
+### Basic Toggle
+```tsx
+import { Toggle } from 'mycrumbs-uikit';
+
+const [enabled, setEnabled] = useState(false);
+
+<Toggle on={enabled} setOn={setEnabled} />
+```
+
+### With Label
+```tsx
+<div className="flex items-center space-x-2">
+  <Toggle on={darkMode} setOn={setDarkMode} />
+  <span>Dark Mode</span>
+</div>
+```
+
+### In Form
+```tsx
+const SettingsForm = () => {
+  const [notifications, setNotifications] = useState(true);
+  const [marketing, setMarketing] = useState(false);
+
+  return (
+    <form className="space-y-4">
+      <div className="flex items-center justify-between">
+        <label className="font-medium">
+          Enable Notifications
+        </label>
+        <Toggle on={notifications} setOn={setNotifications} />
+      </div>
+      <div className="flex items-center justify-between">
+        <label className="font-medium">
+          Marketing Communications
+        </label>
+        <Toggle on={marketing} setOn={setMarketing} />
+      </div>
+    </form>
+  );
+};
+```
+
+### With Description
+```tsx
+<div className="space-y-2">
+  <div className="flex items-center justify-between">
+    <div>
+      <h3 className="font-medium">Automatic Updates</h3>
+      <p className="text-sm text-gray-500">
+        Keep your application up to date automatically
+      </p>
+    </div>
+    <Toggle on={autoUpdate} setOn={setAutoUpdate} />
+  </div>
+</div>
+```
+
+### Disabled State
+```tsx
+<Toggle
+  on={enabled}
+  setOn={setEnabled}
+  className="opacity-50 cursor-not-allowed"
+/>
+```
+
+## Styling
+
+The component uses Tailwind CSS for styling and includes:
+- Smooth transitions
+- Focus states
+- Color variants
+- Size consistency
+- Dark mode support
+- Disabled states
+- Custom colors
+
+## Animation
+
+The toggle includes smooth animations for:
+- State changes
+- Focus rings
+- Hover effects
+- Color transitions
+
+## Best Practices
+
+1. Usage Guidelines:
+   - Use for boolean settings
+   - Provide clear labels
+   - Show immediate feedback
+   - Consider default states
+
+2. Layout:
+   - Maintain consistent spacing
+   - Align with other controls
+   - Consider mobile touch targets
+   - Group related toggles
+
+3. Accessibility:
+   - Include descriptive labels
+   - Support keyboard navigation
+   - Provide visual feedback
+   - Consider screen readers
+
+## Implementation Notes
+
+- Built with @headlessui/react
+- Maintains accessibility
+- Handles keyboard events
+- Supports customization
+- Manages focus states
+- Optimized transitions
+
+<iframe 
+  src="https://example.com" 
+  width="600" 
+  height="200"
+  className="flex rounded-xl"
+  frameBorder="0"
+></iframe>
+
+```tsx
+import { Switch } from '@headlessui/react';
+import type { FC } from 'react';
+
+import cn from '../cn';
+
+interface ToggleProps {
+  on: boolean;
+  setOn: (on: boolean) => void;
+}
+
+export const Toggle: FC<ToggleProps> = ({ on, setOn }) => {
+  return (
+    <Switch
+      checked={on}
+      onChange={() => {
+        setOn(!on);
+      }}
+      className={cn(
+        on ? 'bg-brand-500' : 'bg-gray-200 dark:bg-gray-700',
+        'inline-flex h-[22px] w-[42.5px] min-w-[42.5px] cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none'
+      )}
+    >
+      <span
+        aria-hidden="true"
+        className={cn(
+          on ? 'translate-x-5' : 'translate-x-0',
+          'pointer-events-none inline-block h-[18px] w-[18px] rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out'
+        )}
+      />
+    </Switch>
+  );
+};
+
+```

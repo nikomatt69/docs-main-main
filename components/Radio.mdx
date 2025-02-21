@@ -1,0 +1,197 @@
+---
+title: Radio Component
+---
+
+A form control component for selecting a single option from a set of choices. Built with accessibility and usability in mind, supporting both simple and complex radio button groups.
+
+## Props
+
+- `heading`: ReactNode - The main label for the radio button
+- `description`: ReactNode (optional) - Additional descriptive text
+- `className`: string (optional) - Additional CSS classes
+- All standard HTML input[type="radio"] attributes are supported
+
+## Usage Examples
+
+### Basic Radio Button
+```tsx
+import { Radio } from 'mycrumbs-uikit';
+
+<Radio
+  heading="Email notifications"
+  name="notifications"
+  value="email"
+/>
+```
+
+### Radio Group
+```tsx
+<div className="space-y-2">
+  <Radio
+    heading="Light theme"
+    description="Use light colors for the interface"
+    name="theme"
+    value="light"
+  />
+  <Radio
+    heading="Dark theme"
+    description="Use dark colors for the interface"
+    name="theme"
+    value="dark"
+  />
+  <Radio
+    heading="System theme"
+    description="Match your system preferences"
+    name="theme"
+    value="system"
+  />
+</div>
+```
+
+### Controlled Radio Buttons
+```tsx
+const [selected, setSelected] = useState('email');
+
+<div className="space-y-2">
+  <Radio
+    heading="Email"
+    name="contact"
+    value="email"
+    checked={selected === 'email'}
+    onChange={(e) => setSelected(e.target.value)}
+  />
+  <Radio
+    heading="Phone"
+    name="contact"
+    value="phone"
+    checked={selected === 'phone'}
+    onChange={(e) => setSelected(e.target.value)}
+  />
+</div>
+```
+
+### With Form Integration
+```tsx
+<form onSubmit={handleSubmit}>
+  <fieldset className="space-y-4">
+    <legend className="text-lg font-medium">
+      Subscription Plan
+    </legend>
+    <Radio
+      heading="Basic"
+      description="$10/month - Basic features"
+      name="plan"
+      value="basic"
+      required
+    />
+    <Radio
+      heading="Pro"
+      description="$20/month - Advanced features"
+      name="plan"
+      value="pro"
+    />
+    <Radio
+      heading="Enterprise"
+      description="Custom pricing - All features"
+      name="plan"
+      value="enterprise"
+    />
+  </fieldset>
+  <button type="submit">Continue</button>
+</form>
+```
+
+## Styling
+
+The component uses Tailwind CSS for styling and includes:
+- Custom radio button design
+- Focus states
+- Hover effects
+- Description text styling
+- Dark mode support
+- Spacing utilities
+- Disabled state styling
+
+## Best Practices
+
+1. Group Organization:
+   - Use clear, descriptive labels
+   - Group related options
+   - Consider option order
+   - Maintain consistent spacing
+
+2. User Experience:
+   - Provide sufficient touch targets
+   - Show clear selection state
+   - Consider keyboard navigation
+   - Use appropriate spacing
+
+3. Content Guidelines:
+   - Write clear headings
+   - Use helpful descriptions
+   - Keep options distinct
+   - Consider mobile views
+
+## Accessibility
+
+- Proper label association
+- Keyboard navigation
+- Focus management
+- ARIA attributes
+- Group relationships
+- Screen reader support
+
+## Implementation Notes
+
+- Uses React's forwardRef
+- Maintains native radio behavior
+- Supports form validation
+- Handles keyboard interaction
+- Preserves tab order
+- Manages focus states
+
+<iframe 
+  src="https://example.com" 
+  width="600" 
+  height="200"
+  className="flex rounded-xl"
+  frameBorder="0"
+></iframe>
+
+```tsx
+import type { InputHTMLAttributes, ReactNode } from 'react';
+import { forwardRef, useId } from 'react';
+
+import cn from '../cn';
+
+interface RadioProps extends InputHTMLAttributes<HTMLInputElement> {
+  heading: ReactNode;
+  description?: ReactNode;
+  className?: string;
+}
+
+export const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio({
+  heading,
+  description,
+  className = '',
+  ...rest
+}) {
+  const id = useId();
+
+  return (
+    <div className={cn('flex items-center space-x-3', className)}>
+      <input
+        id={id}
+        type="radio"
+        className="text-brand dark:text-brand h-4 w-4 border focus:ring-0 focus:ring-offset-0"
+        {...rest}
+      />
+      <label htmlFor={id}>
+        <div>{heading}</div>
+        {description ? <div className="text-sm">{description}</div> : null}
+      </label>
+    </div>
+  );
+});
+
+```

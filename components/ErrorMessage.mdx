@@ -1,0 +1,152 @@
+---
+title: ErrorMessage Component
+---
+
+A component for displaying error messages with consistent styling and structure. Useful for showing validation errors, API errors, or any other error states in the application.
+
+## Props
+
+- `title`: string (optional) - The title of the error message
+- `error`: Error (optional) - The error object containing the message to display
+- `className`: string (optional) - Additional CSS classes to apply to the error container
+
+## Usage Examples
+
+### Basic Error Message
+```tsx
+import { ErrorMessage } from 'mycrumbs-uikit';
+
+<ErrorMessage
+  title="Form Error"
+  error={new Error("Please fill in all required fields")}
+/>
+```
+
+### API Error Display
+```tsx
+const [error, setError] = useState<Error | null>(null);
+
+try {
+  await apiCall();
+} catch (err) {
+  setError(err as Error);
+}
+
+return <ErrorMessage error={error} />;
+```
+
+### Custom Styling
+```tsx
+<ErrorMessage
+  title="Critical Error"
+  error={new Error("System unavailable")}
+  className="mt-4 mb-2"
+/>
+```
+
+### Form Validation Error
+```tsx
+<form>
+  <input type="email" />
+  {emailError && (
+    <ErrorMessage
+      error={new Error("Please enter a valid email address")}
+    />
+  )}
+</form>
+```
+
+### With Custom Error Object
+```tsx
+const customError = {
+  message: "Unable to process your request"
+};
+
+<ErrorMessage
+  title="Processing Error"
+  error={customError as Error}
+/>
+```
+
+## Styling
+
+The component uses Tailwind CSS for styling and includes:
+- Red color scheme for error states
+- Rounded corners
+- Responsive padding
+- Dark mode support
+- Border highlighting
+- Consistent typography
+- Flexible layout
+
+## Best Practices
+
+1. Error Content:
+   - Use clear, concise error messages
+   - Explain what went wrong
+   - Provide guidance on how to resolve the error
+   - Maintain a consistent tone
+
+2. Visual Presentation:
+   - Use appropriate spacing
+   - Ensure error messages are noticeable
+   - Maintain readability
+   - Consider the context where errors appear
+
+3. Implementation:
+   - Handle different types of errors appropriately
+   - Provide fallback content when needed
+   - Consider internationalization
+   - Log errors when appropriate
+
+## Accessibility
+
+- High color contrast for readability
+- Semantic HTML structure
+- Screen reader friendly
+- Clear error indication
+- Proper ARIA attributes
+
+<iframe 
+  src="https://example.com" 
+  width="600" 
+  height="200"
+  className="flex rounded-xl"
+  frameBorder="0"
+></iframe>
+
+```tsx
+import type { FC } from 'react';
+
+interface ErrorMessageProps {
+  title?: string;
+  error?: Error;
+  className?: string;
+}
+
+export const ErrorMessage: FC<ErrorMessageProps> = ({
+  title,
+  error,
+  className = ''
+}) => {
+  if (!error) {
+    return null;
+  }
+
+  return (
+    <div
+      className={`space-y-1 rounded-xl border-2 border-red-500/50 bg-red-50 p-4 dark:bg-red-900/10 ${className}`}
+    >
+      {title ? (
+        <h3 className="text-sm font-medium text-red-800 dark:text-red-200">
+          {title}
+        </h3>
+      ) : null}
+      <div className="text-sm text-red-700 dark:text-red-200">
+        {error?.message}
+      </div>
+    </div>
+  );
+};
+
+```

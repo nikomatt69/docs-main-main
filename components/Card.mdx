@@ -1,0 +1,147 @@
+---
+title: Card Component
+---
+
+A flexible container component that provides a consistent card layout with support for various content types. Useful for displaying grouped information, content sections, or interactive elements with a unified visual style.
+
+## Props
+
+- `children`: ReactNode - The content to be displayed within the card
+- `as`: ElementType (optional) - The HTML element to render the card as (default: 'div')
+- `className`: string (optional) - Additional CSS classes to apply to the card
+- `forceRounded`: boolean (optional) - Forces rounded corners on all screen sizes
+- `onClick`: MouseEventHandler (optional) - Click handler for interactive cards
+
+## Usage Examples
+
+### Basic Card
+```tsx
+import { Card } from 'mycrumbs-uikit';
+
+<Card>
+  <h2>Card Title</h2>
+  <p>Card content goes here...</p>
+</Card>
+```
+
+### Custom Element Type
+```tsx
+<Card as="article" className="p-4">
+  <h2>Blog Post</h2>
+  <p>Article content...</p>
+</Card>
+```
+
+### Interactive Card
+```tsx
+<Card onClick={() => handleCardClick()} className="cursor-pointer hover:shadow-lg">
+  <div className="p-4">
+    <h3>Clickable Card</h3>
+    <p>Click me to trigger an action</p>
+  </div>
+</Card>
+```
+
+### With Custom Styling
+```tsx
+<Card className="bg-gradient-to-r from-blue-500 to-purple-500 text-white">
+  <div className="p-6">
+    <h2 className="text-xl font-bold">Gradient Card</h2>
+    <p>Content with custom background</p>
+  </div>
+</Card>
+```
+
+### Nested Cards
+```tsx
+<Card className="p-4">
+  <h2>Parent Card</h2>
+  <div className="mt-4 space-y-4">
+    <Card className="bg-gray-50">
+      <p className="p-3">Nested Card 1</p>
+    </Card>
+    <Card className="bg-gray-50">
+      <p className="p-3">Nested Card 2</p>
+    </Card>
+  </div>
+</Card>
+```
+
+## Styling
+
+The component uses Tailwind CSS for styling and includes:
+- Consistent border radius
+- Light and dark theme support
+- Border styling
+- Background colors
+- Responsive design
+- Optional hover and active states
+- Customizable padding and spacing
+
+## Best Practices
+
+1. Content Structure:
+   - Use appropriate heading levels
+   - Maintain consistent padding
+   - Group related content
+   - Consider content hierarchy
+
+2. Interaction Design:
+   - Use hover states for interactive cards
+   - Provide clear feedback for clickable cards
+   - Maintain accessibility when adding interactions
+
+3. Layout Considerations:
+   - Use grid or flex layouts for card groups
+   - Consider responsive behavior
+   - Maintain consistent spacing between cards
+
+## Accessibility
+
+- Semantic HTML structure
+- Proper heading hierarchy
+- Keyboard navigation support for interactive cards
+- ARIA attributes when needed
+- Color contrast compliance
+
+<iframe 
+  src="https://www.chromatic.com/component?appId=663a6564311e0ec20c42bab9&csfId=components-card--template&buildNumber=31&k=666cb65d3d74d74239f10ad0-1200px-interactive-true&h=12&b=-5" 
+  width="600" 
+  height="200"
+  className="flex rounded-xl"
+  frameBorder="0"
+></iframe>
+
+```tsx
+import type { ElementType, FC, MouseEvent, ReactNode } from 'react';
+
+import cn from '../cn';
+
+interface CardProps {
+  children: ReactNode;
+  as?: ElementType;
+  className?: string;
+  forceRounded?: boolean;
+  onClick?: (event: MouseEvent<HTMLDivElement>) => void;
+}
+
+export const Card: FC<CardProps> = ({
+  children,
+  as: Tag = 'div',
+  className = '',
+  forceRounded = false,
+  onClick
+}) => {
+  return (
+    <Tag
+      className={cn(
+        forceRounded ? 'rounded-xl' : 'rounded-xl sm:rounded-xl',
+        'rounded-xl border bg-white dark:border-gray-700 dark:bg-gray-900/90 ',
+        className
+      )}
+      onClick={onClick}
+    >
+      {children}
+    </Tag>
+  );
+};

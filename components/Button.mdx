@@ -1,0 +1,214 @@
+---
+title: Button Component
+---
+
+A versatile button component that supports multiple variants, sizes, and states. Designed to provide consistent button styling across the application while maintaining flexibility and accessibility.
+
+## Props
+
+- `size`: 'sm' | 'md' | 'lg' - Controls the button size
+  - 'sm': Small size, suitable for compact UIs
+  - 'md': Medium size, default option for most use cases
+  - 'lg': Large size, good for prominent actions
+- `variant`: 'primary' | 'secondary' | 'warning' | 'black' | 'danger' - Sets the button's visual style
+  - 'primary': Main action buttons
+  - 'secondary': Less prominent actions
+  - 'warning': Actions that need caution
+  - 'black': High contrast actions
+  - 'danger': Destructive or dangerous actions
+- `outline`: boolean - When true, renders a bordered button without background
+- `icon`: ReactNode - Optional icon to display alongside text
+- `children`: ReactNode - Button content
+- `className`: string - Additional CSS classes
+- All standard HTML button attributes are also supported
+
+## Usage Examples
+
+### Basic Buttons
+```tsx
+import { Button } from 'mycrumbs-uikit';
+
+// Primary button (default)
+<Button>Click me</Button>
+
+// Secondary button
+<Button variant="secondary">Cancel</Button>
+
+// Different sizes
+<Button size="sm">Small</Button>
+<Button size="md">Medium</Button>
+<Button size="lg">Large</Button>
+```
+
+### Variant Examples
+```tsx
+// Warning button
+<Button variant="warning">Proceed with caution</Button>
+
+// Danger button
+<Button variant="danger">Delete</Button>
+
+// Black button
+<Button variant="black">High contrast</Button>
+```
+
+### Outline Style
+```tsx
+// Outline buttons
+<Button variant="primary" outline>Primary outline</Button>
+<Button variant="danger" outline>Danger outline</Button>
+```
+
+### With Icons
+```tsx
+import { ArrowRightIcon } from '@heroicons/react/24/solid';
+
+<Button icon={<ArrowRightIcon className="h-4 w-4" />}>
+  Continue
+</Button>
+```
+
+### Disabled State
+```tsx
+<Button disabled>Cannot click</Button>
+```
+
+## Accessibility
+
+- Fully keyboard accessible
+- Proper ARIA attributes maintained
+- Focus states clearly visible
+- Disabled states properly handled
+
+## Styling
+
+The component uses Tailwind CSS for styling and includes:
+- Consistent padding and spacing
+- Hover and active states
+- Focus rings for keyboard navigation
+- Smooth transitions
+- Support for light and dark themes
+- Disabled state styling
+
+## Best Practices
+
+1. Use the appropriate variant for the action's context:
+   - Primary for main actions
+   - Secondary for alternative actions
+   - Danger for destructive actions
+   - Warning for cautionary actions
+
+2. Maintain consistent sizing within the same view:
+   - Use larger sizes for main actions
+   - Use smaller sizes for compact layouts
+   - Keep similar actions the same size
+
+3. Include clear, action-oriented text:
+   - Use verbs to describe the action
+   - Keep text concise
+   - Be specific about the action's result
+
+<iframe 
+  src="https://www.chromatic.com/component?appId=663a6564311e0ec20c42bab9&csfId=components-button--default&buildNumber=29&k=6654faa814a660f37b38c535-1200px-interactive-true&h=10&b=-2" 
+  width="600" 
+  height="200"
+  className="flex rounded-xl"
+  frameBorder="0"
+></iframe>
+
+```tsx
+import type { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from 'react';
+import { forwardRef } from 'react';
+
+import cn from '../cn';
+
+interface ButtonProps
+  extends DetailedHTMLProps<
+    ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
+  size?: 'sm' | 'md' | 'lg';
+  variant?: 'primary' | 'secondary' | 'warning' | 'black' | 'danger';
+  outline?: boolean;
+  icon?: ReactNode;
+  children?: ReactNode;
+  className?: string;
+}
+
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  function Button(
+    {
+      className = '',
+      size = 'md',
+      variant = 'primary',
+      outline,
+      icon,
+      children,
+      ...rest
+    },
+    ref
+  ) {
+    const commonStyles = {
+      'border-brand-700 focus:ring-brand-400/50 border': variant === 'primary',
+      'border border-gray-600 focus:ring-gray-400/50': variant === 'secondary',
+      'border border-yellow-600 focus:ring-yellow-400/50':
+        variant === 'warning',
+      'border border-black focus:ring-black': variant === 'black',
+      'border border-red-600 focus:ring-red-400/50': variant === 'danger'
+    };
+
+    const nonOutlineStyles = {
+      'bg-brand-500 hover:bg-brand-600 active:bg-brand-700 text-white':
+        !outline && variant === 'primary',
+      'bg-gray-500 text-white hover:bg-gray-600 active:bg-gray-700':
+        !outline && variant === 'secondary',
+      'bg-yellow-500 text-white hover:bg-yellow-400 active:bg-yellow-700':
+        !outline && variant === 'warning',
+      'bg-black text-white hover:bg-gray-900 active:bg-black':
+        !outline && variant === 'black',
+      'bg-red-500 text-white hover:bg-red-400 active:bg-red-700':
+        !outline && variant === 'danger'
+    };
+
+    const outlineStyles = {
+      'text-brand hover:bg-brand-50 active:bg-brand-100':
+        outline && variant === 'primary',
+      'text-gray-500 hover:bg-gray-50 active:bg-gray-100':
+        outline && variant === 'secondary',
+      'text-yellow-500 hover:bg-yellow-50 active:bg-yellow-100':
+        outline && variant === 'warning',
+      'text-black hover:bg-gray-50 active:bg-black':
+        outline && variant === 'black',
+      'text-red-500 hover:bg-red-50 active:bg-red-100':
+        outline && variant === 'danger'
+    };
+
+    const sizeStyles = {
+      'px-3 py-0.5 text-sm': size === 'sm',
+      'px-3 py-1': size === 'md',
+      'px-4 py-1.5': size === 'lg'
+    };
+
+    return (
+      <button
+        ref={ref}
+        className={cn(
+          {
+            ...commonStyles,
+            ...nonOutlineStyles,
+            ...outlineStyles,
+            ...sizeStyles,
+            'inline-flex items-center space-x-1.5': icon && children
+          },
+          'rounded-lg font-bold shadow-sm outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50',
+          className
+        )}
+        type={rest.type}
+        {...rest}
+      >
+        {icon ? icon : null}
+        <div>{children}</div>
+      </button>
+    );
+  }
+);

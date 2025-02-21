@@ -1,0 +1,53 @@
+---
+title: LightBox Component
+---
+
+
+
+This component provides lightbox functionality, allowing images or content to be displayed in an ove
+
+## Props
+
+- `prop1`: Description of prop1.
+- `prop2`: Description of prop2.
+
+## Usage
+
+```tsx
+import { LightBox } from 'mycrumbs-uikit';
+
+const props = {};
+
+<LightBox prop1="value1" prop2="value2" />;
+```
+
+<iframe src="https://example.com" width="600" height="200"  rounded="12px' className={'flex'}frameborder="0"></iframe>
+
+
+```tsx
+import type { FC } from 'react';
+
+
+import { Modal } from './Modal';
+
+interface LightBoxProps {
+  onClose: () => void;
+  show: boolean;
+  url: null | string;
+}
+
+export const LightBox: FC<LightBoxProps> = ({ onClose, show, url }) => {
+  return (
+    <Modal onClose={onClose} show={show}>
+      <img
+        alt={url || ''}
+        className="max-h-screen rounded-xl"
+        height={1000}
+        onClick={onClose}
+        src={url || ''}
+        width={1000}
+      />
+    </Modal>
+  );
+};
+```

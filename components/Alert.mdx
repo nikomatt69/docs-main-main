@@ -1,0 +1,176 @@
+---
+title: Alert Component
+---
+
+A modal dialog component that displays important messages or requires user confirmation. Useful for showing alerts, errors, or requesting confirmation for critical actions.
+
+## Props
+
+- `title`: ReactNode - The title of the alert dialog
+- `description`: ReactNode - The main content of the alert message
+- `show`: boolean - Controls the visibility of the dialog
+- `isDestructive`: boolean (optional) - If true, indicates that the action is destructive/dangerous
+- `isPerformingAction`: boolean (optional) - Indicates if an action is in progress
+- `confirmText`: string (optional) - Custom text for the confirmation button
+- `children`: ReactNode (optional) - Additional content to display in the dialog
+- `onConfirm`: () => void (optional) - Function called when the user confirms
+- `onClose`: () => void - Function called when the dialog is closed
+
+## Usage Examples
+
+### Basic Alert
+```tsx
+import { Alert } from 'mycrumbs-uikit';
+
+<Alert
+  title="Warning"
+  description="Are you sure you want to proceed?"
+  show={isAlertOpen}
+  onClose={() => setIsAlertOpen(false)}
+/>
+```
+
+### Destructive Alert with Confirmation
+```tsx
+<Alert
+  title="Delete Account"
+  description="This action cannot be undone. All data will be permanently deleted."
+  show={showDeleteAlert}
+  isDestructive={true}
+  confirmText="Delete"
+  onConfirm={handleDelete}
+  onClose={() => setShowDeleteAlert(false)}
+/>
+```
+
+### With Custom Content
+```tsx
+<Alert
+  title="Important Details"
+  show={showAlert}
+  onClose={() => setShowAlert(false)}
+>
+  <div className="space-y-4">
+    <p>Custom content here...</p>
+    <ul>
+      <li>Point 1</li>
+      <li>Point 2</li>
+    </ul>
+  </div>
+</Alert>
+```
+
+## Accessibility Notes
+
+- The component uses @headlessui/react to properly handle keyboard navigation and ARIA attributes
+- Focus is automatically managed when the dialog opens
+- Supports closing via ESC key
+- Screen readers appropriately announce dialog content
+
+## Styling
+
+The component is fully styled with Tailwind CSS and supports:
+- Light and dark themes
+- Smooth open/close animations
+- Background blur overlay
+- Responsive design
+
+```tsx
+import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react';
+import type { FC, ReactNode } from 'react';
+import { Fragment } from 'react';
+
+import { Button } from './Button';
+
+interface AlertProps {
+  title: ReactNode;
+  description: ReactNode;
+  show: boolean;
+  isDestructive?: boolean;
+  isPerformingAction?: boolean;
+  confirmText?: string;
+  children?: ReactNode;
+  onConfirm?: () => void;
+  onClose: () => void;
+}
+
+export const Alert: FC<AlertProps> = ({
+  title,
+  description,
+  show,
+  isDestructive = false,
+  isPerformingAction = false,
+  confirmText,
+  children,
+  onConfirm,
+  onClose
+}) => {
+  return (
+    <Transition show={show} as={Fragment}>
+      <Dialog
+        as="div"
+        className="fixed inset-0 z-10 overflow-y-auto"
+        onClose={() => onClose?.()}
+      >
+        <div className="flex min-h-screen items-center justify-center p-4 text-center sm:block sm:p-0">
+          <TransitionChild
+            as={Fragment}
+            enter="ease-out duration-100"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-100"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <DialogPanel className="fixed inset-0 bg-gray-500/75 transition-opacity dark:bg-gray-900/80" />
+          </TransitionChild>
+          <span
+            className="hidden sm:inline-block sm:h-screen sm:align-middle"
+            aria-hidden="true"
+          />
+          <TransitionChild
+            as={Fragment}
+            enter="ease-out duration-100"
+            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            enterTo="opacity-100 translate-y-0 sm:scale-100"
+            leave="ease-in duration-100"
+            leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          >
+            <div className="inline-block w-full scale-100 space-y-6 rounded-xl bg-white p-5 text-left align-bottom shadow-xl transition-all dark:bg-gray-800 sm:max-w-sm sm:align-middle">
+              <div className="space-y-2">
+                <b className="text-xl">{title}</b>
+                <p>{description}</p>
+              </div>
+              <div>{children}</div>
+              <div className="space-y-3">
+                {onConfirm ? (
+                  <Button
+                    className="w-full"
+                    size="lg"
+                    variant={isDestructive ? 'danger' : 'primary'}
+                    disabled={isPerformingAction}
+                    onClick={() => onConfirm()}
+                  >
+                    {confirmText}
+                  </Button>
+                ) : null}
+                <Button
+                  className="w-full"
+                  size="lg"
+                  variant="secondary"
+                  outline
+                  onClick={onClose}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </TransitionChild>
+        </div>
+      </Dialog>
+    </Transition>
+  );
+};
+
+```

@@ -1,0 +1,256 @@
+---
+title: Input Component
+---
+
+A versatile input component that provides a consistent interface for text input across the application. Supports various input types, prefixes, icons, and validation states.
+
+## Props
+
+- `label`: string (optional) - Label text for the input
+- `prefix`: string | ReactNode (optional) - Content to display before the input
+- `iconLeft`: ReactNode (optional) - Icon to display on the left side
+- `iconRight`: ReactNode (optional) - Icon to display on the right side
+- `error`: boolean (optional) - Whether to show error styling
+- `helper`: ReactNode (optional) - Helper text or error message
+- `className`: string (optional) - Additional CSS classes
+- All standard HTML input attributes are supported
+
+## Usage Examples
+
+### Basic Input
+```tsx
+import { Input } from 'mycrumbs-uikit';
+
+<Input
+  label="Username"
+  placeholder="Enter your username"
+/>
+```
+
+### With Prefix
+```tsx
+<Input
+  label="Price"
+  prefix="$"
+  type="number"
+  placeholder="0.00"
+/>
+```
+
+### With Icons
+```tsx
+import { SearchIcon } from '@heroicons/react/24/solid';
+
+<Input
+  iconLeft={<SearchIcon className="h-5 w-5" />}
+  placeholder="Search..."
+/>
+```
+
+### With Validation
+```tsx
+<Input
+  label="Email"
+  type="email"
+  error={!isValidEmail}
+  helper={!isValidEmail ? "Please enter a valid email address" : null}
+/>
+```
+
+### Password Input
+```tsx
+const [showPassword, setShowPassword] = useState(false);
+
+<Input
+  label="Password"
+  type={showPassword ? "text" : "password"}
+  iconRight={
+    <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+    >
+      {showPassword ? "Hide" : "Show"}
+    </button>
+  }
+/>
+```
+
+### With Form Integration
+```tsx
+<form onSubmit={handleSubmit}>
+  <div className="space-y-4">
+    <Input
+      label="Full Name"
+      required
+      {...register('fullName')}
+    />
+    <Input
+      label="Email"
+      type="email"
+      required
+      {...register('email')}
+    />
+    <Input
+      label="Phone"
+      type="tel"
+      prefix="+1"
+      {...register('phone')}
+    />
+    <button type="submit">Submit</button>
+  </div>
+</form>
+```
+
+## Styling
+
+The component uses Tailwind CSS for styling and includes:
+- Consistent height and padding
+- Focus states
+- Error states
+- Hover effects
+- Dark mode support
+- Icon alignment
+- Prefix styling
+- Helper text positioning
+
+## Best Practices
+
+1. Input Labels:
+   - Use clear, concise labels
+   - Indicate required fields
+   - Maintain consistent positioning
+   - Consider field context
+
+2. Validation:
+   - Show errors at appropriate times
+   - Provide helpful error messages
+   - Use consistent error styling
+   - Consider real-time validation
+
+3. User Experience:
+   - Use appropriate input types
+   - Show password visibility toggle
+   - Implement auto-complete when useful
+   - Consider mobile input modes
+
+## Accessibility
+
+- Proper label association
+- Error message announcements
+- Keyboard navigation
+- Focus management
+- ARIA attributes
+- Color contrast compliance
+
+## Implementation Notes
+
+- Uses React's forwardRef
+- Integrates with React Hook Form
+- Supports controlled and uncontrolled usage
+- Handles various input types
+- Maintains consistent styling
+- Supports form validation
+
+<iframe 
+  src="https://663a6564311e0ec20c42bab9-xlpxfwvbkd.chromatic.com/iframe.html?args=&id=components-input--default" 
+  width="600" 
+  height="200"
+  className="flex rounded-xl"
+  frameBorder="0"
+></iframe>
+
+```tsx
+import dynamic from 'next/dynamic';
+import type { ComponentProps, ReactNode } from 'react';
+import { forwardRef, useId } from 'react';
+
+import cn from '../cn';
+import { FieldError } from './Form';
+
+interface InputProps extends Omit<ComponentProps<'input'>, 'prefix'> {
+  label?: string;
+  prefix?: string | ReactNode;
+  iconLeft?: ReactNode;
+  iconRight?: ReactNode;
+  className?: string;
+  helper?: ReactNode;
+  error?: boolean;
+}
+
+export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
+  {
+    label,
+    prefix,
+    type = 'text',
+    iconLeft,
+    iconRight,
+    error,
+    className = '',
+    helper,
+    ...props
+  },
+  ref
+) {
+  const id = useId();
+
+  const iconStyles = [
+    'text-zinc-500 [&>*]:peer-focus:text-brand [&>*]:h-5',
+    { '!text-red-500 [&>*]:peer-focus:!text-red-500': error }
+  ];
+
+  return (
+    <label className="w-full" htmlFor={id}>
+      {label ? (
+        <div className="mb-1 flex items-center space-x-1.5">
+          <div className="font-medium text-gray-800 dark:text-gray-200">
+            {label}
+          </div>
+          <HelpTooltip>{helper}</HelpTooltip>
+        </div>
+      ) : null}
+      <div className="flex">
+        {prefix ? (
+          <span className="lt-text-gray-500 inline-flex items-center rounded-l-xl border border-r-0 border-gray-300 bg-gray-100 px-3 dark:border-gray-700 dark:bg-gray-900">
+            {prefix}
+          </span>
+        ) : null}
+        <div
+          className={cn(
+            { 'bg-gray-500/20 opacity-60': props.disabled },
+            error ? '!border-red-500' : 'focus-within:ring-1',
+            prefix ? 'rounded-r-xl' : 'rounded-xl',
+            'focus-within:border-brand-500 focus-within:ring-brand-400 flex w-full items-center border border-gray-300 bg-white dark:border-gray-700 dark:bg-gray-900'
+          )}
+        >
+          <input
+            id={id}
+            className={cn(
+              { 'placeholder:text-red-500': error },
+              prefix ? 'rounded-r-xl' : 'rounded-xl',
+              'peer w-full border-none bg-transparent outline-none focus:ring-0',
+              className
+            )}
+            type={type}
+            ref={ref}
+            {...props}
+          />
+          <span
+            tabIndex={-1}
+            className={cn({ 'order-first pl-3': iconLeft }, iconStyles)}
+          >
+            {iconLeft}
+          </span>
+          <span
+            tabIndex={-1}
+            className={cn({ 'order-last pr-3': iconRight }, iconStyles)}
+          >
+            {iconRight}
+          </span>
+        </div>
+      </div>
+      {props.name ? <FieldError name={props.name} /> : null}
+    </label>
+  );
+});
+
+```

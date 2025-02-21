@@ -1,0 +1,147 @@
+---
+title: HelpTooltip Component
+---
+
+A tooltip component designed to provide additional help or information when users hover over an information icon. Built with Tippy.js for reliable positioning and animations.
+
+## Props
+
+- `children`: ReactNode - The content to be displayed in the tooltip
+- The component inherits all Tippy.js props for customization
+
+## Usage Examples
+
+### Basic Tooltip
+```tsx
+import { HelpTooltip } from 'mycrumbs-uikit';
+
+<HelpTooltip>
+  This field is required for account creation
+</HelpTooltip>
+```
+
+### With Form Field
+```tsx
+<div className="space-y-2">
+  <label className="flex items-center gap-2">
+    API Key
+    <HelpTooltip>
+      You can find your API key in the dashboard settings
+    </HelpTooltip>
+  </label>
+  <input type="text" />
+</div>
+```
+
+### With Rich Content
+```tsx
+<HelpTooltip>
+  <div className="space-y-2">
+    <p>Password requirements:</p>
+    <ul className="list-disc pl-4">
+      <li>At least 8 characters</li>
+      <li>One uppercase letter</li>
+      <li>One number</li>
+      <li>One special character</li>
+    </ul>
+  </div>
+</HelpTooltip>
+```
+
+### Custom Styling
+```tsx
+<HelpTooltip className="bg-blue-500 text-white">
+  Custom styled tooltip content
+</HelpTooltip>
+```
+
+## Features
+
+- Automatic positioning
+- Smooth animations
+- Dark mode support
+- Keyboard accessibility
+- Touch device support
+- Custom styling options
+- Rich content support
+
+## Styling
+
+The component uses Tailwind CSS for styling and includes:
+- Rounded corners
+- Consistent padding
+- Information icon styling
+- Shadow effects
+- Theme compatibility
+- Transition animations
+
+## Best Practices
+
+1. Content Guidelines:
+   - Keep tooltip content concise
+   - Use clear, helpful language
+   - Avoid redundant information
+   - Consider screen space
+
+2. Positioning:
+   - Place tooltips logically
+   - Avoid overlapping content
+   - Consider viewport edges
+   - Maintain readability
+
+3. Interaction:
+   - Ensure sufficient hover area
+   - Provide keyboard access
+   - Consider touch devices
+   - Maintain appropriate timing
+
+## Accessibility
+
+- Keyboard focusable
+- Screen reader support
+- ARIA attributes
+- Sufficient color contrast
+- Touch target size
+- Focus management
+
+<iframe 
+  src="https://example.com" 
+  width="600" 
+  height="200"
+  className="flex rounded-xl"
+  frameBorder="0"
+></iframe>
+
+```tsx
+import 'tippy.js/dist/tippy.css';
+
+import { InformationCircleIcon } from '@heroicons/react/24/outline';
+import Tippy from '@tippyjs/react';
+import type { FC, ReactNode } from 'react';
+
+interface HelpTooltipProps {
+  children: ReactNode;
+}
+
+const HelpTooltip: FC<HelpTooltipProps> = ({ children }) => {
+  if (!children) {
+    return null;
+  }
+
+  return (
+    <Tippy
+      placement="top"
+      duration={0}
+      className="!rounded-xl p-2.5 !leading-5 tracking-wide shadow-lg"
+      content={<span>{children}</span>}
+    >
+      <span>
+        <InformationCircleIcon className="lt-text-gray-500 h-[15px] w-[15px]" />
+      </span>
+    </Tippy>
+  );
+};
+
+export default HelpTooltip;
+
+```

@@ -1,0 +1,44 @@
+---
+title: ChargingTextLeft Component
+---
+
+This component displays text related to charging status, typically positioned on the left side.
+
+## Props
+
+- `prop1`: Description of prop1.
+- `prop2`: Description of prop2.
+
+## Usage
+
+```tsx
+import { ChargingTextLeft } from 'mycrumbs-uikit';
+
+const props = {};
+
+<ChargingTextLeft prop1="value1" prop2="value2" />;
+```
+
+```tsx
+/*
+We're constantly improving the code you see. 
+Please share your feedback here: https://form.asana.com/?k=uvp-HPgd3_hyoXRBw1IcNg&d=1152665201300829
+*/
+
+import React from "react";
+
+interface Props {
+  className: any;
+}
+
+export const ChargingTextLeft = ({ className }: Props): JSX.Element => {
+  return (
+    <div className={`relative w-[62px] h-[22px] ${className}`}>
+      <div className="absolute -top-px -left-px [font-family:'SF_Pro_Text-Regular',Helvetica] font-normal text-white text-[15px] text-center tracking-[0] leading-[22px] whitespace-nowrap">
+        Charging
+      </div>
+    </div>
+  );
+};
+
+```

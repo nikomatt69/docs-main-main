@@ -1,0 +1,281 @@
+---
+title: Form Component
+---
+
+A comprehensive form component that integrates with React Hook Form and Zod for powerful form handling, validation, and type safety. Provides a consistent way to handle forms across the application.
+
+## Props
+
+- `form`: UseFormReturn - The form instance from React Hook Form
+- `onSubmit`: SubmitHandler - Handler function called when the form is submitted
+- `className`: string (optional) - Additional CSS classes for the form container
+- All standard HTML form attributes are supported
+
+## Utility Hooks and Components
+
+### useZodForm
+A custom hook that combines React Hook Form with Zod schema validation.
+
+```tsx
+interface UseZodFormProps<T extends ZodSchema<FieldValues>> {
+  schema: T;
+  // All React Hook Form config options are supported
+}
+```
+
+### FieldError
+A component to display field-specific validation errors.
+
+```tsx
+interface FieldErrorProps {
+  name?: string; // The name of the field to show errors for
+}
+```
+
+## Usage Examples
+
+### Basic Form
+```tsx
+import { Form, useZodForm } from 'mycrumbs-uikit';
+import { z } from 'zod';
+
+const schema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8)
+});
+
+const LoginForm = () => {
+  const form = useZodForm({
+    schema,
+    defaultValues: {
+      email: '',
+      password: ''
+    }
+  });
+
+  const onSubmit = (data: z.infer<typeof schema>) => {
+    console.log(data);
+  };
+
+  return (
+    <Form form={form} onSubmit={onSubmit} className="space-y-4">
+      <Input
+        label="Email"
+        {...form.register('email')}
+      />
+      <Input
+        label="Password"
+        type="password"
+        {...form.register('password')}
+      />
+      <Button type="submit">Login</Button>
+    </Form>
+  );
+};
+```
+
+### Complex Form with Validation
+```tsx
+const schema = z.object({
+  username: z.string().min(3).max(20),
+  email: z.string().email(),
+  age: z.number().min(18),
+  preferences: z.object({
+    newsletter: z.boolean(),
+    theme: z.enum(['light', 'dark'])
+  })
+});
+
+const RegistrationForm = () => {
+  const form = useZodForm({
+    schema,
+    defaultValues: {
+      username: '',
+      email: '',
+      age: undefined,
+      preferences: {
+        newsletter: false,
+        theme: 'light'
+      }
+    }
+  });
+
+  return (
+    <Form form={form} onSubmit={handleSubmit} className="space-y-6">
+      <div className="space-y-4">
+        <Input label="Username" {...form.register('username')} />
+        <Input label="Email" {...form.register('email')} />
+        <Input 
+          label="Age" 
+          type="number" 
+          {...form.register('age', { valueAsNumber: true })} 
+        />
+        <Checkbox 
+          label="Subscribe to newsletter" 
+          {...form.register('preferences.newsletter')} 
+        />
+        <Select 
+          label="Theme" 
+          {...form.register('preferences.theme')}
+        >
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </Select>
+      </div>
+      <Button type="submit">Register</Button>
+    </Form>
+  );
+};
+```
+
+### Form with Custom Error Handling
+```tsx
+const form = useZodForm({
+  schema,
+  onError: (errors) => {
+    console.error(errors);
+  }
+});
+
+<Form
+  form={form}
+  onSubmit={onSubmit}
+  className="space-y-4"
+>
+  <Input
+    label="Username"
+    {...form.register('username')}
+  />
+  <FieldError name="username" />
+  <Button type="submit">Submit</Button>
+</Form>
+```
+
+## Features
+
+- Type-safe form handling with Zod
+- Built-in validation
+- Field-level error messages
+- Form-level error handling
+- Flexible styling options
+- Integration with React Hook Form
+- Support for complex nested forms
+- Custom validation rules
+
+## Best Practices
+
+1. Form Structure:
+   - Group related fields logically
+   - Use appropriate field types
+   - Provide clear labels
+   - Show validation feedback
+
+2. Validation:
+   - Define clear validation rules
+   - Show errors at appropriate times
+   - Provide helpful error messages
+   - Handle edge cases
+
+3. User Experience:
+   - Clear submission feedback
+   - Proper tab order
+   - Responsive layout
+   - Accessible form controls
+
+## Accessibility
+
+- Semantic form structure
+- Proper label associations
+- Error message announcements
+- Keyboard navigation support
+- Focus management
+- ARIA attributes
+
+<iframe 
+  src="https://example.com" 
+  width="600" 
+  height="200"
+  className="flex rounded-xl"
+  frameBorder="0"
+></iframe>
+
+```tsx
+import { zodResolver } from '@hookform/resolvers/zod';
+import type { ComponentProps, FC } from 'react';
+import type {
+  FieldValues,
+  Resolver,
+  SubmitHandler,
+  UseFormProps,
+  UseFormReturn
+} from 'react-hook-form';
+import { FormProvider, useForm, useFormContext } from 'react-hook-form';
+import type { TypeOf, ZodSchema } from 'zod';
+
+interface UseZodFormProps<T extends ZodSchema<FieldValues>>
+  extends UseFormProps<TypeOf<T>> {
+  schema: T;
+}
+
+export const useZodForm = <T extends ZodSchema<FieldValues>>({
+  schema,
+  ...formConfig
+}: UseZodFormProps<T>) => {
+  return useForm({
+    ...formConfig,
+    resolver: zodResolver(schema) as Resolver<TypeOf<T>, any>
+  });
+};
+
+interface FieldErrorProps {
+  name?: string;
+}
+
+export const FieldError: FC<FieldErrorProps> = ({ name }) => {
+  const {
+    formState: { errors }
+  } = useFormContext();
+
+  if (!name) {
+    return null;
+  }
+
+  const error = errors[name];
+
+  if (!error) {
+    return null;
+  }
+
+  return (
+    <div className="mt-1 text-sm font-bold text-red-500">
+      {error.message as string}
+    </div>
+  );
+};
+
+interface FormProps<T extends FieldValues = Record<string, unknown>>
+  extends Omit<ComponentProps<'form'>, 'onSubmit'> {
+  form: UseFormReturn<T>;
+  onSubmit: SubmitHandler<T>;
+  className?: string;
+}
+
+export const Form = <T extends FieldValues>({
+  form,
+  onSubmit,
+  children,
+  className = ''
+}: FormProps<T>) => {
+  return (
+    <FormProvider {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <fieldset
+          className={cn('flex flex-col', className)}
+          disabled={form.formState.isSubmitting}
+        >
+          {children}
+        </fieldset>
+      </form>
+    </FormProvider>
+  );
+};

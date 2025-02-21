@@ -1,0 +1,165 @@
+---
+title: Spinner Component
+---
+
+A versatile loading spinner component that provides visual feedback for loading states. Supports multiple sizes, variants, and customization options.
+
+## Props
+
+- `className`: string (optional) - Additional CSS classes
+- `variant`: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' (optional) - Color variant of the spinner
+- `size`: 'xs' | 'sm' | 'md' | 'lg' (optional) - Size of the spinner
+
+## Usage Examples
+
+### Basic Spinner
+```tsx
+import { Spinner } from 'mycrumbs-uikit';
+
+<Spinner />
+```
+
+### Different Sizes
+```tsx
+<div className="space-x-4">
+  <Spinner size="xs" />
+  <Spinner size="sm" />
+  <Spinner size="md" />
+  <Spinner size="lg" />
+</div>
+```
+
+### Color Variants
+```tsx
+<div className="space-x-4">
+  <Spinner variant="primary" />
+  <Spinner variant="secondary" />
+  <Spinner variant="success" />
+  <Spinner variant="warning" />
+  <Spinner variant="danger" />
+</div>
+```
+
+### With Custom Styling
+```tsx
+<Spinner className="text-purple-500" />
+```
+
+### In Button
+```tsx
+<button disabled={isLoading} className="flex items-center space-x-2">
+  {isLoading && <Spinner size="sm" />}
+  <span>Submit</span>
+</button>
+```
+
+### Loading State
+```tsx
+const LoadingState = () => {
+  return (
+    <div className="flex items-center justify-center h-40">
+      <Spinner size="lg" />
+    </div>
+  );
+};
+```
+
+## Styling
+
+The component uses Tailwind CSS for styling and includes:
+- Smooth animation
+- Color variants
+- Size options
+- Border styling
+- Dark mode support
+- Customizable colors
+- Responsive design
+
+## Size Guide
+
+- `xs`: 16px - For inline or compact UI elements
+- `sm`: 20px - For buttons or small containers
+- `md`: 32px - Default size, for general use
+- `lg`: 40px - For prominent loading states
+
+## Color Variants
+
+- `primary`: Brand color, default option
+- `secondary`: Neutral color for secondary actions
+- `success`: Green for success states
+- `warning`: Yellow for warning states
+- `danger`: Red for error states
+
+## Best Practices
+
+1. Usage Guidelines:
+   - Use appropriate sizes for context
+   - Choose meaningful color variants
+   - Consider loading duration
+   - Maintain visual hierarchy
+
+2. Implementation:
+   - Center in containers
+   - Match button heights
+   - Use consistent variants
+   - Consider mobile views
+
+3. Accessibility:
+   - Add loading announcements
+   - Maintain color contrast
+   - Consider reduced motion
+   - Provide text alternatives
+
+## Implementation Notes
+
+- Uses CSS animations
+- Supports theme customization
+- Maintains aspect ratio
+- Handles color modes
+- Responsive sizing
+- Performance optimized
+
+<iframe 
+  src="https://example.com" 
+  width="600" 
+  height="200"
+  className="flex rounded-xl"
+  frameBorder="0"
+></iframe>
+
+```tsx
+import type { FC } from 'react';
+
+import cn from '../cn';
+
+interface SpinnerProps {
+  className?: string;
+  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+}
+
+export const Spinner: FC<SpinnerProps> = ({
+  className = '',
+  variant = 'primary',
+  size = 'md'
+}) => {
+  return (
+    <div
+      className={cn(
+        {
+          'border-brand-200 border-t-brand-600': variant === 'primary',
+          'border-gray-200 border-t-gray-600': variant === 'secondary',
+          'border-green-200 border-t-green-600': variant === 'success',
+          'border-yellow-200 border-t-yellow-600': variant === 'warning',
+          'border-red-200 border-t-red-600': variant === 'danger',
+          'h-4 w-4 border-[2px]': size === 'xs',
+          'h-5 w-5 border-2': size === 'sm',
+          'h-8 w-8 border-[3px]': size === 'md',
+          'h-10 w-10 border-4': size === 'lg'
+        },
+        'animate-spin rounded-full',
+        className
+      )}
+    />
+  );
+};

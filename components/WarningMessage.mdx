@@ -1,0 +1,166 @@
+---
+title: WarningMessage Component
+---
+
+A component for displaying warning messages and alerts with a distinctive yellow styling. Useful for showing important notices, cautions, or potential issues to users.
+
+## Props
+
+- `title`: string (optional) - The title of the warning message
+- `message`: ReactNode (optional) - The content of the warning message
+- `className`: string (optional) - Additional CSS classes for customization
+
+## Usage Examples
+
+### Basic Warning
+```tsx
+import { WarningMessage } from 'mycrumbs-uikit';
+
+<WarningMessage
+  message="This action cannot be undone. Please proceed with caution."
+/>
+```
+
+### With Title
+```tsx
+<WarningMessage
+  title="Important Notice"
+  message="Your subscription will expire in 3 days."
+/>
+```
+
+### With Custom Content
+```tsx
+<WarningMessage
+  title="Browser Compatibility"
+  message={
+    <div className="space-y-2">
+      <p>Some features may not work in your current browser:</p>
+      <ul className="list-disc pl-4">
+        <li>WebGL support is required</li>
+        <li>JavaScript must be enabled</li>
+      </ul>
+    </div>
+  }
+/>
+```
+
+### With Custom Styling
+```tsx
+<WarningMessage
+  title="System Update"
+  message="Scheduled maintenance in 30 minutes"
+  className="mt-4 mb-8"
+/>
+```
+
+### In Form Context
+```tsx
+<form onSubmit={handleSubmit}>
+  <div className="space-y-4">
+    <Input label="API Key" />
+    <WarningMessage
+      message="Never share your API key. It provides full access to your account."
+    />
+    <button type="submit">Save Changes</button>
+  </div>
+</form>
+```
+
+## Styling
+
+The component uses Tailwind CSS for styling and includes:
+- Yellow color scheme
+- Rounded corners
+- Responsive padding
+- Dark mode support
+- Border highlighting
+- Consistent typography
+- Flexible layout
+
+## Best Practices
+
+1. Content Guidelines:
+   - Keep messages clear and concise
+   - Use appropriate warning level
+   - Provide actionable information
+   - Maintain consistent tone
+
+2. Visual Presentation:
+   - Use appropriate spacing
+   - Ensure messages are noticeable
+   - Maintain readability
+   - Consider context
+
+3. Implementation:
+   - Group related warnings
+   - Position strategically
+   - Consider dismissible options
+   - Handle dynamic content
+
+## Accessibility
+
+- High color contrast
+- Semantic structure
+- Screen reader support
+- Keyboard navigation
+- ARIA attributes
+- Focus management
+
+## Implementation Notes
+
+- Conditional rendering
+- Flexible content support
+- Theme compatibility
+- Responsive design
+- Error boundary integration
+- Context awareness
+
+<iframe 
+  src="https://example.com" 
+  width="600" 
+  height="200"
+  className="flex rounded-xl"
+  frameBorder="0"
+></iframe>
+
+```tsx
+import type { FC, ReactNode } from 'react';
+
+import cn from '../cn';
+
+interface WarningMessageProps {
+  title?: string;
+  message?: ReactNode;
+  className?: string;
+}
+
+export const WarningMessage: FC<WarningMessageProps> = ({
+  title,
+  message,
+  className = ''
+}) => {
+  if (!message) {
+    return null;
+  }
+
+  return (
+    <div
+      className={cn(
+        'space-y-1 rounded-xl border-2 border-yellow-500/50 bg-yellow-50 p-4 dark:bg-yellow-900/10',
+        className
+      )}
+    >
+      {title ? (
+        <h3 className="text-sm font-medium text-yellow-800 dark:text-yellow-200">
+          {title}
+        </h3>
+      ) : null}
+      <div className="text-sm text-yellow-700 dark:text-yellow-200">
+        {message}
+      </div>
+    </div>
+  );
+};
+
+```

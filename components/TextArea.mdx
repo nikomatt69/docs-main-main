@@ -1,0 +1,183 @@
+---
+title: TextArea Component
+---
+
+A form component for multi-line text input. Provides a consistent interface for longer text content with support for validation and accessibility features.
+
+## Props
+
+- `label`: string (optional) - Label text for the textarea
+- All standard HTML textarea attributes are supported
+
+## Usage Examples
+
+### Basic TextArea
+```tsx
+import { TextArea } from 'mycrumbs-uikit';
+
+<TextArea
+  label="Description"
+  placeholder="Enter a detailed description..."
+/>
+```
+
+### With Form Integration
+```tsx
+<form onSubmit={handleSubmit}>
+  <TextArea
+    label="Message"
+    name="message"
+    required
+    {...register('message')}
+  />
+  <button type="submit">Send</button>
+</form>
+```
+
+### With Character Count
+```tsx
+const MaxLength = 500;
+
+const MessageInput = () => {
+  const [value, setValue] = useState('');
+
+  return (
+    <div className="space-y-1">
+      <TextArea
+        label="Your message"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        maxLength={MaxLength}
+      />
+      <div className="text-sm text-gray-500">
+        {value.length}/{MaxLength} characters
+      </div>
+    </div>
+  );
+};
+```
+
+### With Validation
+```tsx
+<TextArea
+  label="Feedback"
+  error={errors.feedback}
+  {...register('feedback', {
+    required: 'Feedback is required',
+    minLength: {
+      value: 10,
+      message: 'Feedback must be at least 10 characters'
+    }
+  })}
+/>
+```
+
+### Auto-resize
+```tsx
+const AutoResizeTextArea = () => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  }, [value]);
+
+  return (
+    <TextArea
+      ref={textareaRef}
+      label="Auto-resize content"
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+    />
+  );
+};
+```
+
+## Styling
+
+The component uses Tailwind CSS for styling and includes:
+- Consistent padding
+- Focus states
+- Error states
+- Rounded corners
+- Dark mode support
+- Disabled styling
+- Responsive height
+
+## Best Practices
+
+1. Input Guidelines:
+   - Provide clear labels
+   - Set appropriate size
+   - Consider character limits
+   - Use placeholder text wisely
+
+2. Validation:
+   - Show clear error states
+   - Validate on submit
+   - Consider real-time validation
+   - Provide helpful messages
+
+3. User Experience:
+   - Consider auto-resize
+   - Maintain consistent width
+   - Show remaining characters
+   - Handle long content
+
+## Accessibility
+
+- Proper label association
+- Error announcements
+- Keyboard navigation
+- Focus management
+- ARIA attributes
+- Color contrast
+
+## Implementation Notes
+
+- Uses React's forwardRef
+- Integrates with forms
+- Supports validation
+- Handles resizing
+- Maintains state
+- Error handling
+
+<iframe 
+  src="https://example.com" 
+  width="600" 
+  height="200"
+  className="flex rounded-xl"
+  frameBorder="0"
+></iframe>
+
+```tsx
+import type { ComponentProps } from 'react';
+import { forwardRef, useId } from 'react';
+
+import { FieldError } from './Form';
+
+interface TextAreaProps extends ComponentProps<'textarea'> {
+  label?: string;
+}
+
+export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
+  function TextArea({ label, ...props }, ref) {
+    const id = useId();
+
+    return (
+      <label htmlFor={id}>
+        {label ? <div className="label">{label}</div> : null}
+        <textarea
+          id={id}
+          className="focus:border-brand-500 focus:ring-brand-400 w-full rounded-xl border border-gray-300 bg-white px-4 py-2 shadow-sm disabled:bg-gray-500/20 disabled:opacity-60 dark:border-gray-700 dark:bg-gray-900"
+          ref={ref}
+          {...props}
+        />
+        {props.name ? <FieldError name={props.name} /> : null}
+      </label>
+    );
+  }
+);

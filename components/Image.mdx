@@ -1,0 +1,181 @@
+---
+title: Image Component
+---
+
+An enhanced image component that provides error handling, loading states, and fallback functionality. Built on top of the native HTML img element with additional features for better user experience.
+
+## Props
+
+- All standard HTML img attributes are supported
+- `onError`: Function - Custom error handler for image loading failures
+- `ref`: React.Ref - React ref for accessing the image element
+
+## Features
+
+- Automatic error handling
+- Fallback on load failure
+- Ref forwarding
+- Alt text support
+- Lazy loading capability
+- Native browser caching
+
+## Usage Examples
+
+### Basic Image
+```tsx
+import { Image } from 'mycrumbs-uikit';
+
+<Image
+  src="/path/to/image.jpg"
+  alt="Description of the image"
+/>
+```
+
+### With Error Handling
+```tsx
+<Image
+  src="/path/to/image.jpg"
+  alt="Profile picture"
+  onError={(e) => {
+    console.error('Image failed to load:', e);
+  }}
+/>
+```
+
+### Responsive Image
+```tsx
+<Image
+  src="/path/to/image.jpg"
+  alt="Responsive image"
+  className="w-full h-auto max-w-lg"
+/>
+```
+
+### With Loading Attributes
+```tsx
+<Image
+  src="/path/to/large-image.jpg"
+  alt="Lazy loaded image"
+  loading="lazy"
+  width={800}
+  height={600}
+/>
+```
+
+### With Fallback
+```tsx
+const [imageSrc, setImageSrc] = useState('/path/to/image.jpg');
+
+<Image
+  src={imageSrc}
+  alt="Image with fallback"
+  onError={() => setImageSrc('/path/to/fallback.jpg')}
+/>
+```
+
+## Best Practices
+
+1. Image Loading:
+   - Use appropriate image sizes
+   - Implement lazy loading
+   - Provide width and height
+   - Consider responsive images
+
+2. Error Handling:
+   - Always provide fallback behavior
+   - Log errors when needed
+   - Show user-friendly messages
+   - Handle network issues
+
+3. Accessibility:
+   - Use descriptive alt text
+   - Consider color contrast
+   - Maintain aspect ratios
+   - Support screen readers
+
+## Performance Tips
+
+- Use appropriate image formats
+- Implement lazy loading
+- Optimize image sizes
+- Use browser caching
+- Consider CDN usage
+- Implement responsive images
+
+## Styling
+
+The component supports all standard image styling including:
+- Width and height
+- Object fit properties
+- Border and border radius
+- Margin and padding
+- Responsive classes
+- Transition effects
+
+## Error States
+
+The component handles various error scenarios:
+- Network failures
+- Invalid image sources
+- Loading timeouts
+- Missing resources
+- CORS issues
+
+<iframe 
+  src="https://example.com" 
+  width="600" 
+  height="200"
+  className="flex rounded-xl"
+  frameBorder="0"
+></iframe>
+
+```tsx
+import type {
+  DetailedHTMLProps,
+  ImgHTMLAttributes,
+  Ref,
+  SyntheticEvent
+} from 'react';
+import { forwardRef, useCallback, useEffect, useState } from 'react';
+
+interface ImageProps extends DetailedHTMLProps<
+  ImgHTMLAttributes<HTMLImageElement>,
+  HTMLImageElement
+> {}
+
+export const Image = forwardRef(function Image(
+  {
+    onError,
+    ...props
+  }: DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>,
+  ref: Ref<HTMLImageElement>
+) {
+  const [imageLoadFailed, setImageLoadFailed] = useState(false);
+
+  const handleError = useCallback(
+    (e: SyntheticEvent<HTMLImageElement, Event>) => {
+      if (imageLoadFailed) {
+        return;
+      }
+      setImageLoadFailed(true);
+      if (onError) {
+        onError(e);
+      }
+    },
+    [imageLoadFailed, setImageLoadFailed, onError]
+  );
+
+  useEffect(() => {
+    setImageLoadFailed(false);
+  }, [props.src]);
+
+  return (
+    <img
+      {...props}
+      src={imageLoadFailed ? '': props.src}
+      onError={handleError}
+      alt={props.alt || ''}
+      ref={ref}
+    />
+  );
+});

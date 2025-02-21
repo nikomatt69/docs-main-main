@@ -1,0 +1,102 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "MyCrumbsUI",
+  "logo": {
+    "dark": "/logo/dark.png",
+    "light": "/logo/light.png"
+  },
+  "favicon": "/favicon.png",
+  "colors": {
+    "primary": "#3b82f6",
+    "light": "#1d4ed8",
+    "dark": "#3b82f6",
+    "anchors": {
+      "from": "#1d4ed8",
+      "to": "#bfdbfe"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Support",
+      "url": "mailto:nikoemme@skiff.com"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Website",
+    "url": "https://mycrumbs.xyz"
+  },
+  
+  "anchors": [
+    {
+      "name": "Get Started",
+      "icon": "book",
+      "url": "introduction"
+    },
+   
+    {
+      "name": "Components",
+      "icon": "slack",
+      "url": "components"
+    }
+    
+  ],
+  "navigation": [
+    {
+      "group": "Get Started",
+      "pages": [
+        "introduction",
+        "quickstart"
+      ]
+    },
+    {
+      "group": "Components",
+      "pages": [
+        "components/3DCard",
+        "components/AirpodsProLeft",
+        "components/AirpodsProRight",
+        "components/Alert",
+        "components/Audio",
+        "components/Button",
+        "components/Card",
+        "components/ChargingIconRight",
+        "components/ChargingTextLeft",
+        "components/Checkbox",
+        "components/Collapse",
+        "components/EmptyState",
+        "components/ErrorMessage",
+        "components/Form",
+        "components/GridLayout",
+        "components/HelpTooltip",
+        "components/Image",
+        "components/Input",
+        "components/Lamp",
+        "components/LightBox",
+        "components/Modal",
+        "components/MovingBorder",
+        "components/PageLoading",
+        "components/Popover",
+        "components/PropertyDefault",
+        "components/Radio",
+        "components/RangeSlider",
+        "components/Select",
+        "components/SilentIconLeft",
+        "components/SongThumbnail",
+        "components/SilentIconLeft4",
+        "components/SilentTextRight",
+        "components/Spinner",
+        "components/TabButton",
+        "components/TextArea",
+        "components/Toggle",
+        "components/Toggle2",
+        "components/Tooltip",
+        "components/WarningMessage"
+      ]
+    }
+   
+  ],
+  "footerSocials": {
+    "x": "https://x.com/nikomatt69",
+    "github": "https://github.com/nikomatt69"
+
+  }
+}

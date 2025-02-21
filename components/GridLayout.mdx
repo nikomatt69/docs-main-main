@@ -1,0 +1,73 @@
+---
+title: GridLayout Component
+---
+
+This component provides a grid layout, useful for arranging content in a grid format.
+
+## Props
+
+- `prop1`: Description of prop1.
+- `prop2`: Description of prop2.
+
+## Usage
+
+```tsx
+import { GridLayout } from 'mycrumbs-uikit';
+
+const props = {};
+
+<GridLayout prop1="value1" prop2="value2" />;
+```
+
+<iframe src="https://663a6564311e0ec20c42bab9-xlpxfwvbkd.chromatic.com/iframe.html?args=&id=components-grid--default" width="600" height="200"  rounded="12px' className={'flex'}frameborder="0"></iframe>
+
+
+```tsx
+import type { FC, ReactNode } from 'react';
+
+import cn from '../cn';
+
+interface GridProps {
+  children: ReactNode;
+  className?: string;
+  classNameChild?: string;
+}
+
+export const GridLayout: FC<GridProps> = ({
+  children,
+  className = '',
+  classNameChild = ''
+}) => {
+  return (
+    <div
+      className={cn(
+        'container mx-auto mt-10 max-w-screen-xl grow px-0 pb-2 pt-8 sm:px-5',
+        className
+      )}
+    >
+      <div className={cn('grid grid-cols-12 lg:gap-8', classNameChild)}>
+        {children}
+      </div>
+    </div>
+  );
+};
+
+export const GridItemFour: FC<GridProps> = ({ children, className = '' }) => {
+  return (
+    <div className={cn('col-span-12 md:col-span-12 lg:col-span-4', className)}>
+      {children}
+    </div>
+  );
+};
+
+export const GridItemEight: FC<GridProps> = ({ children, className = '' }) => {
+  return (
+    <div
+      className={cn('col-span-12 mb-5 md:col-span-12 lg:col-span-8', className)}
+    >
+      {children}
+    </div>
+  );
+};
+
+```

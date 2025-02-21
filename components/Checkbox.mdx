@@ -1,0 +1,162 @@
+---
+title: Checkbox Component
+---
+
+A form control component that allows users to select one or multiple options. Built with accessibility and ease of use in mind, supporting both controlled and uncontrolled usage.
+
+## Props
+
+- `label`: string (optional) - Text label displayed next to the checkbox
+- `className`: string (optional) - Additional CSS classes for the checkbox input
+- All standard HTML input[type="checkbox"] attributes are supported
+
+## Usage Examples
+
+### Basic Checkbox
+```tsx
+import { Checkbox } from 'mycrumbs-uikit';
+
+<Checkbox label="Accept terms and conditions" />
+```
+
+### Controlled Checkbox
+```tsx
+const [isChecked, setIsChecked] = useState(false);
+
+<Checkbox
+  label="Subscribe to newsletter"
+  checked={isChecked}
+  onChange={(e) => setIsChecked(e.target.checked)}
+/>
+```
+
+### With Custom Styling
+```tsx
+<Checkbox
+  label="Custom styled checkbox"
+  className="text-purple-500 focus:ring-purple-400"
+/>
+```
+
+### Disabled State
+```tsx
+<Checkbox
+  label="Cannot change this option"
+  disabled
+/>
+```
+
+### Required Field
+```tsx
+<Checkbox
+  label="This field is required"
+  required
+/>
+```
+
+### Within a Form
+```tsx
+<form onSubmit={handleSubmit}>
+  <div className="space-y-4">
+    <Checkbox
+      name="terms"
+      label="I agree to the terms"
+      required
+    />
+    <Checkbox
+      name="marketing"
+      label="Send me marketing emails"
+    />
+    <button type="submit">Submit</button>
+  </div>
+</form>
+```
+
+## Styling
+
+The component uses Tailwind CSS for styling and includes:
+- Custom checkbox design
+- Focus states for keyboard navigation
+- Hover effects
+- Disabled state styling
+- Dark mode support
+- Customizable colors through className
+
+## Accessibility Features
+
+- Proper label association using unique IDs
+- Keyboard navigation support
+- Screen reader friendly
+- Focus visible states
+- ARIA attributes when needed
+
+## Best Practices
+
+1. Form Usage:
+   - Always provide clear, descriptive labels
+   - Group related checkboxes
+   - Indicate required fields
+   - Maintain consistent spacing
+
+2. Interaction:
+   - Provide immediate visual feedback
+   - Ensure sufficient touch target size
+   - Keep labels concise but descriptive
+
+3. Validation:
+   - Show clear error states
+   - Provide helpful error messages
+   - Validate on form submission
+
+## Implementation Notes
+
+- Uses React's forwardRef for ref forwarding
+- Generates unique IDs for label association
+- Maintains native checkbox behavior
+- Supports form validation
+
+<iframe 
+  src="https://example.com" 
+  width="600" 
+  height="200"
+  className="flex rounded-xl"
+  frameBorder="0"
+></iframe>
+
+```tsx
+import type { ComponentProps } from 'react';
+import { forwardRef, useId } from 'react';
+
+import cn from '../cn';
+
+interface CheckboxProps extends Omit<ComponentProps<'input'>, 'prefix'> {
+  label?: string;
+  className?: string;
+}
+
+export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
+  function CheckBox({ label, className = '', ...props }, ref) {
+    const id = useId();
+
+    return (
+      <div className="flex items-center">
+        <input
+          ref={ref}
+          className={cn(
+            'text-brand focus:ring-brand-500 mr-2 cursor-pointer rounded border-gray-300 transition duration-200',
+            className
+          )}
+          type="checkbox"
+          id={id}
+          {...props}
+        />
+        <label
+          className="inline-block whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"
+          htmlFor={id}
+        >
+          {label}
+        </label>
+      </div>
+    );
+  }
+);

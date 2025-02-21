@@ -1,0 +1,55 @@
+---
+title: EmptyState Component
+---
+
+
+This component provides an empty state view, typically used to indicate no data or content available.
+
+## Props
+
+- `prop1`: Description of prop1.
+- `prop2`: Description of prop2.
+
+## Usage
+
+```tsx
+import { EmptyState } from 'mycrumbs-uikit';
+
+const props = {};
+
+<EmptyState prop1="value1" prop2="value2" />;
+```
+
+<iframe src="https://example.com" width="600" height="200"  rounded="12px' className={'flex'}frameborder="0"></iframe>
+
+
+```tsx
+import type { FC, ReactNode } from 'react';
+
+import { Card } from './Card';
+
+interface EmptyStateProps {
+  message: ReactNode;
+  icon: ReactNode;
+  hideCard?: boolean;
+}
+
+export const EmptyState: FC<EmptyStateProps> = ({
+  message,
+  icon,
+  hideCard = false
+}) => {
+  return (
+    <Card
+      className={hideCard ? 'border-0 !bg-transparent !shadow-none' : ''}
+      forceRounded
+    >
+      <div className="grid justify-items-center space-y-2 p-5">
+        <div>{icon}</div>
+        <div>{message}</div>
+      </div>
+    </Card>
+  );
+};
+
+```
