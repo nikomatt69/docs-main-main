@@ -1,31 +1,41 @@
 ---
-title: Button Component
+title: Button 
+description: A comprehensive and customizable button component that serves as a fundamental building block for user interactions in your application.
 ---
 
-A versatile button component that supports multiple variants, sizes, and states. Designed to provide consistent button styling across the application while maintaining flexibility and accessibility.
+A versatile button component that supports multiple variants, sizes, and states. Designed to provide consistent button styling across the application while maintaining flexibility and accessibility. This component is built with modern web practices and follows the WAI-ARIA guidelines for maximum accessibility.
+
+## Key Features
+
+- **Flexible Styling**: Multiple variants and sizes to match your design system
+- **Accessibility Built-in**: ARIA compliant with keyboard navigation support
+- **Icon Support**: Seamless integration with icons from popular icon libraries
+- **Responsive Design**: Adapts to different screen sizes and device types
+- **TypeScript Support**: Full type safety with comprehensive TypeScript definitions
+- **Customizable**: Extensive styling options through Tailwind CSS classes
 
 ## Props
 
 - `size`: 'sm' | 'md' | 'lg' - Controls the button size
-  - 'sm': Small size, suitable for compact UIs
-  - 'md': Medium size, default option for most use cases
-  - 'lg': Large size, good for prominent actions
+  - 'sm': Small size (24px height), suitable for compact UIs and dense layouts
+  - 'md': Medium size (32px height), default option for most use cases
+  - 'lg': Large size (40px height), good for prominent actions and touch targets
 - `variant`: 'primary' | 'secondary' | 'warning' | 'black' | 'danger' - Sets the button's visual style
-  - 'primary': Main action buttons
-  - 'secondary': Less prominent actions
-  - 'warning': Actions that need caution
-  - 'black': High contrast actions
-  - 'danger': Destructive or dangerous actions
-- `outline`: boolean - When true, renders a bordered button without background
-- `icon`: ReactNode - Optional icon to display alongside text
-- `children`: ReactNode - Button content
-- `className`: string - Additional CSS classes
-- All standard HTML button attributes are also supported
+  - 'primary': Main action buttons, used for primary CTAs and important actions
+  - 'secondary': Less prominent actions, perfect for secondary options
+  - 'warning': Actions that need caution, used for potentially risky operations
+  - 'black': High contrast actions, ideal for maximum visibility
+  - 'danger': Destructive or dangerous actions, such as delete operations
+- `outline`: boolean - When true, renders a bordered button without background, useful for less prominent actions
+- `icon`: ReactNode - Optional icon to display alongside text, supports any React component
+- `children`: ReactNode - Button content (text or other React components)
+- `className`: string - Additional CSS classes for custom styling
+- All standard HTML button attributes (type, disabled, onClick, etc.)
 
 ## Usage Examples
 
 ### Basic Buttons
-```tsx
+```javascript
 import { Button } from 'mycrumbs-uikit';
 
 // Primary button (default)
@@ -41,7 +51,7 @@ import { Button } from 'mycrumbs-uikit';
 ```
 
 ### Variant Examples
-```tsx
+```javascript
 // Warning button
 <Button variant="warning">Proceed with caution</Button>
 
@@ -53,14 +63,14 @@ import { Button } from 'mycrumbs-uikit';
 ```
 
 ### Outline Style
-```tsx
+```javascript
 // Outline buttons
 <Button variant="primary" outline>Primary outline</Button>
 <Button variant="danger" outline>Danger outline</Button>
 ```
 
 ### With Icons
-```tsx
+```javascript
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
 
 <Button icon={<ArrowRightIcon className="h-4 w-4" />}>
@@ -69,7 +79,7 @@ import { ArrowRightIcon } from '@heroicons/react/24/solid';
 ```
 
 ### Disabled State
-```tsx
+```javascript
 <Button disabled>Cannot click</Button>
 ```
 
@@ -116,7 +126,7 @@ The component uses Tailwind CSS for styling and includes:
 
 ></iframe>
 
-```tsx
+```javascript
 import type { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from 'react';
 import { forwardRef } from 'react';
 

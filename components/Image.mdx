@@ -1,5 +1,5 @@
 ---
-title: Image Component
+title: Image 
 ---
 
 An enhanced image component that provides error handling, loading states, and fallback functionality. Built on top of the native HTML img element with additional features for better user experience.
@@ -22,7 +22,7 @@ An enhanced image component that provides error handling, loading states, and fa
 ## Usage Examples
 
 ### Basic Image
-```tsx
+```javascript
 import { Image } from 'mycrumbs-uikit';
 
 <Image
@@ -32,7 +32,7 @@ import { Image } from 'mycrumbs-uikit';
 ```
 
 ### With Error Handling
-```tsx
+```javascript
 <Image
   src="/path/to/image.jpg"
   alt="Profile picture"
@@ -43,7 +43,7 @@ import { Image } from 'mycrumbs-uikit';
 ```
 
 ### Responsive Image
-```tsx
+```javascript
 <Image
   src="/path/to/image.jpg"
   alt="Responsive image"
@@ -52,7 +52,7 @@ import { Image } from 'mycrumbs-uikit';
 ```
 
 ### With Loading Attributes
-```tsx
+```javascript
 <Image
   src="/path/to/large-image.jpg"
   alt="Lazy loaded image"
@@ -63,7 +63,7 @@ import { Image } from 'mycrumbs-uikit';
 ```
 
 ### With Fallback
-```tsx
+```javascript
 const [imageSrc, setImageSrc] = useState('/path/to/image.jpg');
 
 <Image
@@ -129,7 +129,7 @@ The component handles various error scenarios:
 
 ></iframe>
 
-```tsx
+```javascript
 import type {
   DetailedHTMLProps,
   ImgHTMLAttributes,

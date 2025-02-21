@@ -1,5 +1,5 @@
 ---
-title: PageLoading Component
+title: PageLoading 
 ---
 
 A full-page loading component that displays a centered spinner with an optional message. Useful for indicating loading states during page transitions or data fetching.
@@ -11,19 +11,19 @@ A full-page loading component that displays a centered spinner with an optional 
 ## Usage Examples
 
 ### Basic Loading
-```tsx
+```javascript
 import { PageLoading } from 'mycrumbs-uikit';
 
 <PageLoading />
 ```
 
 ### With Message
-```tsx
+```javascript
 <PageLoading message="Loading your dashboard..." />
 ```
 
 ### In Page Transition
-```tsx
+```javascript
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState(null);
@@ -43,7 +43,7 @@ const Dashboard = () => {
 ```
 
 ### With Dynamic Message
-```tsx
+```javascript
 const LoadingStates = {
   INITIAL: 'Getting things ready...',
   DATA: 'Loading your data...',
@@ -95,7 +95,7 @@ The component uses Tailwind CSS for styling and includes:
 
 
 
-```tsx
+```javascript
 import type { FC } from 'react';
 
 import { Spinner } from '../src/Spinner';

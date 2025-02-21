@@ -1,5 +1,5 @@
 ---
-title: Spinner Component
+title: Spinner 
 ---
 
 A versatile loading spinner component that provides visual feedback for loading states. Supports multiple sizes, variants, and customization options.
@@ -13,14 +13,14 @@ A versatile loading spinner component that provides visual feedback for loading 
 ## Usage Examples
 
 ### Basic Spinner
-```tsx
+```javascript
 import { Spinner } from 'mycrumbs-uikit';
 
 <Spinner />
 ```
 
 ### Different Sizes
-```tsx
+```javascript
 <div className="space-x-4">
   <Spinner size="xs" />
   <Spinner size="sm" />
@@ -30,7 +30,7 @@ import { Spinner } from 'mycrumbs-uikit';
 ```
 
 ### Color Variants
-```tsx
+```javascript
 <div className="space-x-4">
   <Spinner variant="primary" />
   <Spinner variant="secondary" />
@@ -41,12 +41,12 @@ import { Spinner } from 'mycrumbs-uikit';
 ```
 
 ### With Custom Styling
-```tsx
+```javascript
 <Spinner className="text-purple-500" />
 ```
 
 ### In Button
-```tsx
+```javascript
 <button disabled={isLoading} className="flex items-center space-x-2">
   {isLoading && <Spinner size="sm" />}
   <span>Submit</span>
@@ -54,7 +54,7 @@ import { Spinner } from 'mycrumbs-uikit';
 ```
 
 ### Loading State
-```tsx
+```javascript
 const LoadingState = () => {
   return (
     <div className="flex items-center justify-center h-40">
@@ -127,7 +127,7 @@ The component uses Tailwind CSS for styling and includes:
 
 ></iframe>
 
-```tsx
+```javascript
 import type { FC } from 'react';
 
 import cn from '../cn';

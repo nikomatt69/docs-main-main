@@ -1,5 +1,5 @@
 ---
-title: TextArea Component
+title: TextArea 
 ---
 
 A form component for multi-line text input. Provides a consistent interface for longer text content with support for validation and accessibility features.
@@ -12,7 +12,7 @@ A form component for multi-line text input. Provides a consistent interface for 
 ## Usage Examples
 
 ### Basic TextArea
-```tsx
+```javascript
 import { TextArea } from 'mycrumbs-uikit';
 
 <TextArea
@@ -22,7 +22,7 @@ import { TextArea } from 'mycrumbs-uikit';
 ```
 
 ### With Form Integration
-```tsx
+```javascript
 <form onSubmit={handleSubmit}>
   <TextArea
     label="Message"
@@ -35,7 +35,7 @@ import { TextArea } from 'mycrumbs-uikit';
 ```
 
 ### With Character Count
-```tsx
+```javascript
 const MaxLength = 500;
 
 const MessageInput = () => {
@@ -58,7 +58,7 @@ const MessageInput = () => {
 ```
 
 ### With Validation
-```tsx
+```javascript
 <TextArea
   label="Feedback"
   error={errors.feedback}
@@ -73,7 +73,7 @@ const MessageInput = () => {
 ```
 
 ### Auto-resize
-```tsx
+```javascript
 const AutoResizeTextArea = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -153,7 +153,7 @@ The component uses Tailwind CSS for styling and includes:
 
 ></iframe>
 
-```tsx
+```javascript
 import type { ComponentProps } from 'react';
 import { forwardRef, useId } from 'react';
 

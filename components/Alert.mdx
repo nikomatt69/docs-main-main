@@ -1,30 +1,64 @@
 ---
-title: Alert Component
-description: A modal dialog component for displaying important alerts and requesting user confirmations
+title: Alert 
+description: A sophisticated modal dialog component for displaying critical information, warnings, and confirmation requests with full accessibility support and customizable styling
 ---
 
 # Alert
 
-The Alert component is a modal dialog used to display important messages and request user confirmations. It's built on Headless UI for accessibility and transitions.
+The Alert component is a highly customizable modal dialog designed for displaying important messages, warnings, and requesting user confirmations. Built on Headless UI for robust accessibility and smooth transitions, this component provides a consistent and user-friendly way to present critical information across your application.
+
+## Component Overview
+
+- **Purpose**: Presents important information that requires immediate attention
+- **Use Cases**: Confirmations, warnings, error messages, and important notifications
+- **Features**:
+  - Multiple visual styles for different alert types
+  - Customizable animations and transitions
+  - Full keyboard navigation support
+  - Screen reader optimized
+  - Flexible content rendering
+  - Loading state management
+  - Destructive action handling
 
 ## Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `title` | `ReactNode` | Required | The alert's title |
-| `description` | `ReactNode` | Required | The main content of the alert |
-| `show` | `boolean` | Required | Controls the alert's visibility |
-| `isDestructive` | `boolean` | `false` | If true, highlights the alert as a destructive action |
-| `isPerformingAction` | `boolean` | `false` | Shows a loading state while performing the action |
-| `confirmText` | `string` | `'Confirm'` | Text for the confirmation button |
-| `children` | `ReactNode` | - | Additional content to display in the alert |
-| `onConfirm` | `() => void` | - | Callback executed on confirmation |
-| `onClose` | `() => void` | Required | Callback executed when closing |
+| `title` | `ReactNode` | Required | The alert's title - should be clear and concise |
+| `description` | `ReactNode` | Required | The main content of the alert - supports rich text and components |
+| `show` | `boolean` | Required | Controls the alert's visibility state |
+| `isDestructive` | `boolean` | `false` | When true, applies destructive styling (red color scheme) for dangerous actions |
+| `isPerformingAction` | `boolean` | `false` | Displays a loading spinner and disables interactions while processing |
+| `confirmText` | `string` | `'Confirm'` | Custom text for the confirmation button - should be action-specific |
+| `children` | `ReactNode` | - | Additional content rendered below the description - perfect for custom UI elements |
+| `onConfirm` | `() => void` | - | Callback function executed when the user confirms the action |
+| `onClose` | `() => void` | Required | Callback function for handling alert dismissal |
+
+## Advanced Features
+
+### Animation Configuration
+The alert supports customizable enter/leave animations with the following properties:
+- Fade in/out transitions
+- Scale transformations
+- Configurable timing functions
+- Direction-based animations
+
+### Focus Management
+- Automatically focuses the first focusable element
+- Maintains focus trap within the modal
+- Restores focus to the trigger element on close
+- Supports custom focus handling
+
+### Keyboard Navigation
+- Enter: Triggers primary action
+- Escape: Closes the alert
+- Tab: Cycles through focusable elements
+- Arrow keys: Navigation within select elements
 
 ## Usage Examples
 
 ### Basic Alert
-```tsx
+```javascript
 import { Alert } from 'mycrumbs-uikit';
 
 function Example() {
@@ -46,7 +80,7 @@ function Example() {
 ```
 
 ### Destructive Alert
-```tsx
+```javascript
 <Alert
   show={isOpen}
   title="Delete Account"
@@ -59,7 +93,7 @@ function Example() {
 ```
 
 ### Alert with Custom Content
-```tsx
+```javascript
 <Alert
   show={isOpen}
   title="Additional Information"

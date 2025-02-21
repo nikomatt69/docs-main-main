@@ -13,14 +13,14 @@ A form control component that allows users to select one or multiple options. Bu
 ## Usage Examples
 
 ### Basic Checkbox
-```tsx
+```javascript
 import { Checkbox } from 'mycrumbs-uikit';
 
 <Checkbox label="Accept terms and conditions" />
 ```
 
 ### Controlled Checkbox
-```tsx
+```javascript
 const [isChecked, setIsChecked] = useState(false);
 
 <Checkbox
@@ -31,7 +31,7 @@ const [isChecked, setIsChecked] = useState(false);
 ```
 
 ### With Custom Styling
-```tsx
+```javascript
 <Checkbox
   label="Custom styled checkbox"
   className="text-purple-500 focus:ring-purple-400"
@@ -115,13 +115,17 @@ The component uses Tailwind CSS for styling and includes:
 - Maintains native checkbox behavior
 - Supports form validation
 
-
+<iframe 
+  src="https://example.com" 
+  width="600" 
+  height="200"
+  className="flex rounded-xl"
+  frameBorder="0"
+></iframe>
 
 ```tsx
 import type { ComponentProps } from 'react';
 import { forwardRef, useId } from 'react';
-
-import cn from '../cn';
 
 interface CheckboxProps extends Omit<ComponentProps<'input'>, 'prefix'> {
   label?: string;

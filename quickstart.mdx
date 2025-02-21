@@ -11,11 +11,11 @@ Welcome to the MyCrumbs UI Kit quickstart guide. This guide will help you set up
 
 First, you need to install the MyCrumbs UI Kit package. You can do this using npm or yarn.
 
-```bash
+```
 npm install mycrumbs-uikit
 ```
 or
-```bash
+```
 yarn add mycrumbs-uikit
 ```
 
@@ -23,7 +23,7 @@ yarn add mycrumbs-uikit
 
 To use MyCrumbs UI Kit, you need to wrap your application with the `MyCrumbsProvider`. This ensures that all components have access to the theme and other configurations.
 
-```tsx
+```javascript
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { MyCrumbsProvider } from 'mycrumbs-uikit';
@@ -41,15 +41,22 @@ ReactDOM.render(
 
 Now you can start using the components provided by MyCrumbs UI Kit. Here is an example of how to use a button component.
 
-```tsx
+```javascript
 import React from 'react';
 import { Button } from 'mycrumbs-uikit';
 
-const MyComponent = () => (
-  <Button onClick={() => alert('Button clicked!')}>
-    Click Me
-  </Button>
-);
+const MyComponent = () => {
+  const handleClick = () => {
+    console.log('Button clicked!');
+
+  };
+
+  return (
+    <Button onClick={handleClick}>
+      Click Me
+    </Button>
+  );
+};
 
 export default MyComponent;
 ```
@@ -58,7 +65,7 @@ export default MyComponent;
 
 MyCrumbs UI Kit allows you to customize the theme to match your brand. You can do this by passing a custom theme to the `MyCrumbsProvider`.
 
-```tsx
+```javascript
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { MyCrumbsProvider, createTheme } from 'mycrumbs-uikit';

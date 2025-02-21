@@ -1,24 +1,66 @@
 ---
-title: Input Component
+title: Input 
+description: A highly customizable and accessible input component with comprehensive styling and validation capabilities
 ---
 
-A versatile input component that provides a consistent interface for text input across the application. Supports various input types, prefixes, icons, and validation states.
+A versatile input component that provides a sophisticated interface for text input across your application. Built with accessibility, customization, and user experience in mind, this component supports various input types, visual enhancements, and seamless integration with form management solutions.
+
+## Component Features
+
+- **Rich Customization**: Extensive styling options and visual variants
+- **Accessibility First**: WCAG 2.1 compliant with screen reader support
+- **Form Integration**: Seamless work with React Hook Form and other form libraries
+- **Validation Support**: Built-in error states and validation feedback
+- **Responsive Design**: Adapts to different screen sizes and orientations
+- **Dark Mode**: Full support for light and dark themes
+- **Icon Integration**: Flexible positioning of icons and visual elements
+- **Performance Optimized**: Minimal re-renders and efficient updates
 
 ## Props
 
 - `label`: string (optional) - Label text for the input
+  - Supports rich text formatting
+  - Automatically associates with input via aria-labelledby
+  - Maintains proper contrast ratios
 - `prefix`: string | ReactNode (optional) - Content to display before the input
+  - Supports text and component prefixes
+  - Maintains proper alignment and spacing
+  - Adapts to input size changes
 - `iconLeft`: ReactNode (optional) - Icon to display on the left side
+  - Supports SVG and component icons
+  - Maintains consistent sizing
+  - Interactive state styling
 - `iconRight`: ReactNode (optional) - Icon to display on the right side
+  - Perfect for validation indicators
+  - Action triggers (clear, show/hide password)
+  - Status indicators
 - `error`: boolean (optional) - Whether to show error styling
+  - Applies error-specific visual feedback
+  - Updates focus ring color
+  - Modifies placeholder text color
 - `helper`: ReactNode (optional) - Helper text or error message
-- `className`: string (optional) - Additional CSS classes
+  - Supports rich text content
+  - Proper spacing and alignment
+  - Screen reader announcements
+- `className`: string (optional) - Additional CSS classes for customization
 - All standard HTML input attributes are supported
+
+## Input Types Support
+
+The component provides optimized support for various input types:
+- text: Standard text input with optional formatting
+- password: Secure input with show/hide capability
+- email: Email validation and keyboard optimization
+- number: Numeric input with step controls
+- tel: Phone number input with formatting
+- search: Search input with clear button
+- url: URL input with validation
+- date: Date picker with calendar integration
 
 ## Usage Examples
 
 ### Basic Input
-```tsx
+```javascript
 import { Input } from 'mycrumbs-uikit';
 
 <Input
@@ -28,7 +70,7 @@ import { Input } from 'mycrumbs-uikit';
 ```
 
 ### With Prefix
-```tsx
+```javascript
 <Input
   label="Price"
   prefix="$"
@@ -38,7 +80,7 @@ import { Input } from 'mycrumbs-uikit';
 ```
 
 ### With Icons
-```tsx
+```javascript
 import { SearchIcon } from '@heroicons/react/24/solid';
 
 <Input
@@ -48,7 +90,7 @@ import { SearchIcon } from '@heroicons/react/24/solid';
 ```
 
 ### With Validation
-```tsx
+```javascript
 <Input
   label="Email"
   type="email"
@@ -58,7 +100,7 @@ import { SearchIcon } from '@heroicons/react/24/solid';
 ```
 
 ### Password Input
-```tsx
+```javascript
 const [showPassword, setShowPassword] = useState(false);
 
 <Input
@@ -76,7 +118,7 @@ const [showPassword, setShowPassword] = useState(false);
 ```
 
 ### With Form Integration
-```tsx
+```javascript
 <form onSubmit={handleSubmit}>
   <div className="space-y-4">
     <Input
@@ -160,7 +202,7 @@ The component uses Tailwind CSS for styling and includes:
 
 ></iframe>
 
-```tsx
+```javascript
 import dynamic from 'next/dynamic';
 import type { ComponentProps, ReactNode } from 'react';
 import { forwardRef, useId } from 'react';

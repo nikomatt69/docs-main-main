@@ -1,5 +1,5 @@
 ---
-title: Toggle Component
+title: Toggle 
 ---
 
 A switch component that provides a visual toggle between two states. Built with Headless UI for accessibility and smooth animations.
@@ -12,7 +12,7 @@ A switch component that provides a visual toggle between two states. Built with 
 ## Usage Examples
 
 ### Basic Toggle
-```tsx
+```javascript
 import { Toggle } from 'mycrumbs-uikit';
 
 const [enabled, setEnabled] = useState(false);
@@ -21,7 +21,7 @@ const [enabled, setEnabled] = useState(false);
 ```
 
 ### With Label
-```tsx
+```javascript
 <div className="flex items-center space-x-2">
   <Toggle on={darkMode} setOn={setDarkMode} />
   <span>Dark Mode</span>
@@ -29,7 +29,7 @@ const [enabled, setEnabled] = useState(false);
 ```
 
 ### In Form
-```tsx
+```javascript
 const SettingsForm = () => {
   const [notifications, setNotifications] = useState(true);
   const [marketing, setMarketing] = useState(false);
@@ -54,7 +54,7 @@ const SettingsForm = () => {
 ```
 
 ### With Description
-```tsx
+```javascript
 <div className="space-y-2">
   <div className="flex items-center justify-between">
     <div>
@@ -69,7 +69,7 @@ const SettingsForm = () => {
 ```
 
 ### Disabled State
-```tsx
+```javascript
 <Toggle
   on={enabled}
   setOn={setEnabled}
@@ -133,7 +133,7 @@ The toggle includes smooth animations for:
 
 ></iframe>
 
-```tsx
+```javascript
 import { Switch } from '@headlessui/react';
 import type { FC } from 'react';
 

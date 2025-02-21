@@ -1,5 +1,5 @@
 ---
-title: ErrorMessage Component
+title: ErrorMessage 
 ---
 
 A component for displaying error messages with consistent styling and structure. Useful for showing validation errors, API errors, or any other error states in the application.
@@ -13,7 +13,7 @@ A component for displaying error messages with consistent styling and structure.
 ## Usage Examples
 
 ### Basic Error Message
-```tsx
+```javascript
 import { ErrorMessage } from 'mycrumbs-uikit';
 
 <ErrorMessage
@@ -23,7 +23,7 @@ import { ErrorMessage } from 'mycrumbs-uikit';
 ```
 
 ### API Error Display
-```tsx
+```javascript
 const [error, setError] = useState<Error | null>(null);
 
 try {
@@ -36,7 +36,7 @@ return <ErrorMessage error={error} />;
 ```
 
 ### Custom Styling
-```tsx
+```javascript
 <ErrorMessage
   title="Critical Error"
   error={new Error("System unavailable")}
@@ -45,7 +45,7 @@ return <ErrorMessage error={error} />;
 ```
 
 ### Form Validation Error
-```tsx
+```javascript
 <form>
   <input type="email" />
   {emailError && (
@@ -57,7 +57,7 @@ return <ErrorMessage error={error} />;
 ```
 
 ### With Custom Error Object
-```tsx
+```javascript
 const customError = {
   message: "Unable to process your request"
 };
@@ -109,7 +109,7 @@ The component uses Tailwind CSS for styling and includes:
 
 
 
-```tsx
+```javascript
 import type { FC } from 'react';
 
 interface ErrorMessageProps {

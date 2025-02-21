@@ -1,22 +1,60 @@
 ---
-title: Form Component
+title: Form 
+description: A powerful and type-safe form management component built with React Hook Form and Zod integration
 ---
 
-A comprehensive form component that integrates with React Hook Form and Zod for powerful form handling, validation, and type safety. Provides a consistent way to handle forms across the application.
+A comprehensive form component that provides enterprise-grade form handling capabilities through seamless integration with React Hook Form and Zod. This component offers robust validation, type safety, and exceptional developer experience while maintaining optimal performance and accessibility.
+
+## Key Features
+
+- **Type Safety**: Full TypeScript support with Zod schema validation
+- **Performance Optimized**: Efficient re-rendering with React Hook Form
+- **Flexible Validation**: Synchronous and asynchronous validation support
+- **Rich Form State**: Access to detailed form state and metadata
+- **Nested Forms**: Support for complex, nested form structures
+- **Field Arrays**: Dynamic form fields with array operations
+- **Custom Controls**: Easy integration with custom form controls
+- **Accessibility**: WCAG 2.1 compliant form handling
 
 ## Props
 
 - `form`: UseFormReturn - The form instance from React Hook Form
+  - Provides form state management
+  - Handles form validation
+  - Manages form submission
+  - Controls form reset functionality
 - `onSubmit`: SubmitHandler - Handler function called when the form is submitted
+  - Receives validated form data
+  - Type-safe with Zod schema inference
+  - Supports async operations
 - `className`: string (optional) - Additional CSS classes for the form container
 - All standard HTML form attributes are supported
+
+## Advanced Features
+
+### Form State Management
+The form component provides access to rich form state information:
+- Dirty state tracking
+- Touched fields
+- Form submission state
+- Validation state
+- Error messages
+- Field arrays state
+
+### Validation Modes
+Supports multiple validation triggers:
+- onChange
+- onBlur
+- onSubmit
+- onTouched
+- all
 
 ## Utility Hooks and Components
 
 ### useZodForm
 A custom hook that combines React Hook Form with Zod schema validation.
 
-```tsx
+```javascript
 interface UseZodFormProps<T extends ZodSchema<FieldValues>> {
   schema: T;
   // All React Hook Form config options are supported
@@ -26,7 +64,7 @@ interface UseZodFormProps<T extends ZodSchema<FieldValues>> {
 ### FieldError
 A component to display field-specific validation errors.
 
-```tsx
+```javascript
 interface FieldErrorProps {
   name?: string; // The name of the field to show errors for
 }
@@ -35,7 +73,7 @@ interface FieldErrorProps {
 ## Usage Examples
 
 ### Basic Form
-```tsx
+```javascript
 import { Form, useZodForm } from 'mycrumbs-uikit';
 import { z } from 'zod';
 
@@ -75,7 +113,7 @@ const LoginForm = () => {
 ```
 
 ### Complex Form with Validation
-```tsx
+```javascript
 const schema = z.object({
   username: z.string().min(3).max(20),
   email: z.string().email(),
@@ -129,7 +167,7 @@ const RegistrationForm = () => {
 ```
 
 ### Form with Custom Error Handling
-```tsx
+```javascript
 const form = useZodForm({
   schema,
   onError: (errors) => {
@@ -193,7 +231,7 @@ const form = useZodForm({
 
 
 
-```tsx
+```javascript
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { ComponentProps, FC } from 'react';
 import type {
