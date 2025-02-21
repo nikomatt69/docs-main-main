@@ -1,20 +1,25 @@
 ---
 title: Alert Component
+description: A modal dialog component for displaying important alerts and requesting user confirmations
 ---
 
-A modal dialog component that displays important messages or requires user confirmation. Useful for showing alerts, errors, or requesting confirmation for critical actions.
+# Alert
+
+The Alert component is a modal dialog used to display important messages and request user confirmations. It's built on Headless UI for accessibility and transitions.
 
 ## Props
 
-- `title`: ReactNode - The title of the alert dialog
-- `description`: ReactNode - The main content of the alert message
-- `show`: boolean - Controls the visibility of the dialog
-- `isDestructive`: boolean (optional) - If true, indicates that the action is destructive/dangerous
-- `isPerformingAction`: boolean (optional) - Indicates if an action is in progress
-- `confirmText`: string (optional) - Custom text for the confirmation button
-- `children`: ReactNode (optional) - Additional content to display in the dialog
-- `onConfirm`: () => void (optional) - Function called when the user confirms
-- `onClose`: () => void - Function called when the dialog is closed
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `ReactNode` | Required | The alert's title |
+| `description` | `ReactNode` | Required | The main content of the alert |
+| `show` | `boolean` | Required | Controls the alert's visibility |
+| `isDestructive` | `boolean` | `false` | If true, highlights the alert as a destructive action |
+| `isPerformingAction` | `boolean` | `false` | Shows a loading state while performing the action |
+| `confirmText` | `string` | `'Confirm'` | Text for the confirmation button |
+| `children` | `ReactNode` | - | Additional content to display in the alert |
+| `onConfirm` | `() => void` | - | Callback executed on confirmation |
+| `onClose` | `() => void` | Required | Callback executed when closing |
 
 ## Usage Examples
 
@@ -22,154 +27,81 @@ A modal dialog component that displays important messages or requires user confi
 ```tsx
 import { Alert } from 'mycrumbs-uikit';
 
-<Alert
-  title="Warning"
-  description="Are you sure you want to proceed?"
-  show={isAlertOpen}
-  onClose={() => setIsAlertOpen(false)}
-/>
+function Example() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <Alert
+      show={isOpen}
+      title="Confirm Action"
+      description="Are you sure you want to proceed with this action?"
+      onConfirm={() => {
+        // handle confirmation
+        setIsOpen(false);
+      }}
+      onClose={() => setIsOpen(false)}
+    />
+  );
+}
 ```
 
-### Destructive Alert with Confirmation
+### Destructive Alert
 ```tsx
 <Alert
+  show={isOpen}
   title="Delete Account"
   description="This action cannot be undone. All data will be permanently deleted."
-  show={showDeleteAlert}
-  isDestructive={true}
+  isDestructive
   confirmText="Delete"
   onConfirm={handleDelete}
-  onClose={() => setShowDeleteAlert(false)}
+  onClose={() => setIsOpen(false)}
 />
 ```
 
-### With Custom Content
+### Alert with Custom Content
 ```tsx
 <Alert
-  title="Important Details"
-  show={showAlert}
-  onClose={() => setShowAlert(false)}
+  show={isOpen}
+  title="Additional Information"
+  description="Please review the following details:"
+  onClose={() => setIsOpen(false)}
 >
-  <div className="space-y-4">
-    <p>Custom content here...</p>
-    <ul>
-      <li>Point 1</li>
-      <li>Point 2</li>
+  <div className="mt-4">
+    <ul className="list-disc pl-4">
+      <li>Detail 1</li>
+      <li>Detail 2</li>
     </ul>
   </div>
 </Alert>
 ```
 
-## Accessibility Notes
+## Accessibility
 
-- The component uses @headlessui/react to properly handle keyboard navigation and ARIA attributes
-- Focus is automatically managed when the dialog opens
-- Supports closing via ESC key
-- Screen readers appropriately announce dialog content
+- Uses appropriate ARIA roles for modal dialog
+- Handles focus trap correctly
+- Supports ESC key dismissal
+- Provides smooth transitions for better user experience
 
-## Styling
+## Technical Notes
 
-The component is fully styled with Tailwind CSS and supports:
-- Light and dark themes
-- Smooth open/close animations
-- Background blur overlay
-- Responsive design
+- Built on [@headlessui/react](https://headlessui.dev/)
+- Supports customization through children
+- Automatically handles enter/leave animations
+- Responsive and adaptable to different use cases
 
-```tsx
-import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react';
-import type { FC, ReactNode } from 'react';
-import { Fragment } from 'react';
+## Best Practices
 
-import { Button } from './Button';
+1. Use clear and concise titles
+2. Provide descriptive content in the description
+3. Use destructive styling only for irreversible actions
+4. Keep confirmation text actionable and specific
+5. Consider using loading states for async operations
 
-interface AlertProps {
-  title: ReactNode;
-  description: ReactNode;
-  show: boolean;
-  isDestructive?: boolean;
-  isPerformingAction?: boolean;
-  confirmText?: string;
-  children?: ReactNode;
-  onConfirm?: () => void;
-  onClose: () => void;
-}
+## Implementation Details
 
-export const Alert: FC<AlertProps> = ({
-  title,
-  description,
-  show,
-  isDestructive = false,
-  isPerformingAction = false,
-  confirmText,
-  children,
-  onConfirm,
-  onClose
-}) => {
-  return (
-    <Transition show={show} as={Fragment}>
-      <Dialog
-        as="div"
-        className="fixed inset-0 z-10 overflow-y-auto"
-        onClose={() => onClose?.()}
-      >
-        <div className="flex min-h-screen items-center justify-center p-4 text-center sm:block sm:p-0">
-          <TransitionChild
-            as={Fragment}
-            enter="ease-out duration-100"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-100"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <DialogPanel className="fixed inset-0 bg-gray-500/75 transition-opacity dark:bg-gray-900/80" />
-          </TransitionChild>
-          <span
-            className="hidden sm:inline-block sm:h-screen sm:align-middle"
-            aria-hidden="true"
-          />
-          <TransitionChild
-            as={Fragment}
-            enter="ease-out duration-100"
-            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            enterTo="opacity-100 translate-y-0 sm:scale-100"
-            leave="ease-in duration-100"
-            leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-          >
-            <div className="inline-block w-full scale-100 space-y-6 rounded-xl bg-white p-5 text-left align-bottom shadow-xl transition-all dark:bg-gray-800 sm:max-w-sm sm:align-middle">
-              <div className="space-y-2">
-                <b className="text-xl">{title}</b>
-                <p>{description}</p>
-              </div>
-              <div>{children}</div>
-              <div className="space-y-3">
-                {onConfirm ? (
-                  <Button
-                    className="w-full"
-                    size="lg"
-                    variant={isDestructive ? 'danger' : 'primary'}
-                    disabled={isPerformingAction}
-                    onClick={() => onConfirm()}
-                  >
-                    {confirmText}
-                  </Button>
-                ) : null}
-                <Button
-                  className="w-full"
-                  size="lg"
-                  variant="secondary"
-                  outline
-                  onClick={onClose}
-                >
-                  Cancel
-                </Button>
-              </div>
-            </div>
-          </TransitionChild>
-        </div>
-      </Dialog>
-    </Transition>
-  );
-};
-```
+The Alert component is built using Headless UI's Dialog component and includes:
+- Transition animations for smooth entry/exit
+- Backdrop click handling
+- Keyboard interaction support
+- Focus management
+- Screen reader compatibility

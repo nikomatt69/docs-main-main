@@ -21,7 +21,7 @@ const props = {};
 
 <iframe 
   src="https://663a6564311e0ec20c42bab9-xlpxfwvbkd.chromatic.com/iframe.html?args=&id=components-grid--default"  
-  width="600" 
+  width="500" 
   height="200"
   style={{ borderRadius: '12px' }}
   className="flex"
@@ -69,7 +69,7 @@ export const GridItemFour: FC<GridProps> = ({ children, className = '' }) => {
 export const GridItemEight: FC<GridProps> = ({ children, className = '' }) => {
   return (
     <div
-      className={cn('col-span-12 mb-5 md:col-span-12 lg:col-span-8', className)}
+      className={cn('col-span-12 mb-5 md:col-span-12 lg:col-span-4', className)}
     >
       {children}
     </div>
